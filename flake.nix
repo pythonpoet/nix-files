@@ -17,7 +17,7 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              ./machines/zuerich/configuration.nix
+              ./machines/zuerich/default.nix
             ];
       };
     };
