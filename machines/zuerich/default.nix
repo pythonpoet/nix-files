@@ -28,7 +28,7 @@
    openssh.authorizedKeys.keys = [
       (builtins.readFile (builtins.fetchurl {
         url = "https://github.com/puffnfresh.keys";
-        sha256 = "0gv8wpjxvb18fmvjvlg5ba9phqdhrmyl86qkkv8n7s7kq4dy12di";
+        sha256 = "0gqhba0m2gcf9m6lrfzz08rx5bzr6rixjwv9pbqbfckqb3yis4mk";
       }))
    ];
   };
