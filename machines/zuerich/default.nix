@@ -11,6 +11,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  nix.settings= {
+          trusted-users = [ "david" ];
+          experimental-features = ["nix-command" "flakes"];
+        };
+
   networking.hostName = "zurich"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -35,11 +40,7 @@
     builtins.filter (key: key != "") 
       (lib.strings.splitString "\n" keysContent);
   };
-   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOr7hdJO0P2TBs5GH+XmOi7XoBT6LiAS7Ym6IEgM2H0 david@alpakapro"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEqJMYvhMOn3ckmfn524NfrCPkdbtdXJZXfiy6hzQn22 david@alpakabook"
-    ];
-
+   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -49,6 +50,7 @@
    helix
    wget
    curl
+   tmux
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -64,6 +66,6 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.tailscale.enable = true;
-  system.stateVersion = "25.11"; # Did you read the comment?
+
 
 }
