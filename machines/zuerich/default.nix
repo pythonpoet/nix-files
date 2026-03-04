@@ -25,12 +25,15 @@
     description = "david";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
-   openssh.authorizedKeys.keys = [
-      (builtins.readFile (builtins.fetchurl {
-        url = "https://github.com/puffnfresh.keys";
-        sha256 = "0gqhba0m2gcf9m6lrfzz08rx5bzr6rixjwv9pbqbfckqb3yis4mk";
-      }))
-   ];
+    openssh.authorizedKeys.keys = 
+    let
+      keysContent = builtins.readFile (builtins.fetchurl {
+        url = "https://github.com/pythonpoet.keys";
+        sha256 = "0kyfd5baakdy21g7grlmpr5wyfl41fz8fp6iqa5kp674a0mwr6jp";
+      });
+    in
+    builtins.filter (key: key != "") 
+      (lib.strings.splitString "\n" keysContent);
   };
    users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOr7hdJO0P2TBs5GH+XmOi7XoBT6LiAS7Ym6IEgM2H0 david@alpakapro"
