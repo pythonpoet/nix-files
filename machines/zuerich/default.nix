@@ -27,8 +27,8 @@
     packages = with pkgs; [];
    openssh.authorizedKeys.keys = [
       (builtins.readFile (builtins.fetchurl {
-        url = "https://github.com/pythonpoet.keys";
-        sha256 = "0kyfd5baakdy21g7grlmpr5wyfl41fz8fp6iqa5kp674a0mwr6jp";
+        url = "https://github.com/puffnfresh.keys";
+        sha256 = "0gv8wpjxvb18fmvjvlg5ba9phqdhrmyl86qkkv8n7s7kq4dy12di";
       }))
    ];
   };
