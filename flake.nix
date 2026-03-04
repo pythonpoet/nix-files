@@ -11,7 +11,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager }:
-    rec {
+    {
       nixosConfigurations = {
         zuerich =
           nixpkgs.lib.nixosSystem {
@@ -19,7 +19,7 @@
             modules = [
               ./machines/zuerich/configuration.nix
             ];
-          };
       };
     };
+  };
 }
