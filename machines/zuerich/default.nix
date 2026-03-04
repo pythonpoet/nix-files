@@ -28,7 +28,7 @@
    openssh.authorizedKeys.keys = [
       (builtins.readFile (builtins.fetchurl {
         url = "https://github.com/pythonpoet.keys";
-        sha256 = "";
+        sha256 = "0kyfd5baakdy21g7grlmpr5wyfl41fz8fp6iqa5kp674a0mwr6jp";
       }))
    ];
   };
