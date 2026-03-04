@@ -7,6 +7,13 @@
       ./hardware-configuration.nix
     ];
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/home/david/nix-files"; # sets NH_OS_FLAKE variable for you
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
