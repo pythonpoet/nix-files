@@ -54,7 +54,7 @@
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/styn10.keys";
-        sha256 = "";
+        sha256 = "07ivc1hzgdd6096wpcssxnx7m6b14d2c03f490cd795yz43vb3cw";
       });
     in
     builtins.filter (key: key != "") 
