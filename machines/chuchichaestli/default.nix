@@ -21,7 +21,7 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
 
-  networking.hostName = "zurich"; # Define your hostname.
+  networking.hostName = "chuchichaestli"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -45,6 +45,22 @@
     builtins.filter (key: key != "") 
       (lib.strings.splitString "\n" keysContent);
   };
+  users.users.tonda = {
+    isNormalUser = true;
+    description = "Tonda";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
+    openssh.authorizedKeys.keys = 
+    let
+      keysContent = builtins.readFile (builtins.fetchurl {
+        url = "https://github.com/styn10.keys";
+        sha256 = "";
+      });
+    in
+    builtins.filter (key: key != "") 
+      (lib.strings.splitString "\n" keysContent);
+  };
+  
    
   # List packages installed in system profile. To search, run:
   # $ nix search wget
