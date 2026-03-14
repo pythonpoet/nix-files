@@ -8,9 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs.agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = { self, nixpkgs, home-manager, agenix }:
     {
       nixosConfigurations = {
         chuchichaestli =
@@ -19,6 +20,7 @@
             modules = [
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflaired.nix
+              agenix.nixosModules.default
             ];
       };
     };
