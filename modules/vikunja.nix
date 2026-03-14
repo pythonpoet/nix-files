@@ -62,7 +62,7 @@ in {
     services.vikunja = {
       enable = true;
       port = cfg.port;
-      #frontendScheme = "http";
+      frontendScheme = "http";
       frontendHostname = cfg.url;
       
     };
