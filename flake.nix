@@ -20,6 +20,7 @@
             modules = [
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
+              ./modules/nginx.nix
               agenix.nixosModules.default
             ];
       };
