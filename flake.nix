@@ -21,6 +21,15 @@
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
               ./modules/nginx.nix
+              ./modules/vikunja.nix
+              {
+               vikunja = {
+                  enable = true;
+                  # db_path = "/data1/vikunja/db/vikunja.db";
+                  # files_path = "/data1/vikunja/files";
+                  #secretConfigFile = age.secrets.vikunja-config.path;
+                };
+              }
               agenix.nixosModules.default
             ];
       };
