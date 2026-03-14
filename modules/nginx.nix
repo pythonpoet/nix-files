@@ -4,10 +4,10 @@
   lib,
   ...
 }:{
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "biobrotmithonig@gmail.com";
-    };
+    # security.acme = {
+    #   acceptTerms = true;
+    #   defaults.email = "biobrotmithonig@gmail.com";
+    # };
 
 
     services.nginx = {
@@ -21,8 +21,8 @@
       virtualHosts = {
 
         "taaltaak.org" = {
-         addSSL = true;
-         enableACME = true;
+        #  addSSL = true;
+        #  enableACME = true;
           locations."/" = {
             # Serve a simple Hello World page
             root = pkgs.writeTextDir "index.html" ''
