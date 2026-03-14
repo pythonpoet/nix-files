@@ -24,7 +24,6 @@
          addSSL = true;
          enableACME = true;
           locations."/" = {
-            extraConfig = extraConfig;
             # Serve a simple Hello World page
             root = pkgs.writeTextDir "index.html" ''
               <!DOCTYPE html>
