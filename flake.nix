@@ -19,7 +19,7 @@
             system = "x86_64-linux";
             modules = [
               ./machines/chuchichaestli/default.nix
-              ./modules/cloudflaired.nix
+              ./modules/cloudflared.nix
               agenix.nixosModules.default
             ];
       };
