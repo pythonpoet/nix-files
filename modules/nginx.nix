@@ -3,34 +3,11 @@
   pkgs,
   lib,
   ...
-}: with lib; let
-  email = "biobrotmithonig@gmail.com";
-  extraConfig = ''
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header X-Request-Id $request_id; # Add X-Request-Id header
-    client_max_body_size 32G;
-  '';
-
-  # Define SSL and ACME settings in a let variable
-  sslSettings = {
-    addSSL = true;
-    enableACME = true;
-  };
-
-in {
-  options.reverse-proxy = {
-    enable = mkEnableOption "Enable reverse-proxy service";
-    
-   
-  };
+}:{
     security.acme = {
       acceptTerms = true;
-      defaults.email = email;
+      defaults.email = "biobrotmithonig@gmail.com";
     };
-
 
 
     services.nginx = {
