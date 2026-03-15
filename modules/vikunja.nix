@@ -9,7 +9,7 @@ with lib; let
   # Default values
   vikunjaDefaults = {
     url = "vikunja.davidwild.ch";
-    db_path = "/data1/vikunja/db/vikunja.db";
+    db_path = "/home/david/vikunja/db/vikunja.db";
     files_path = "/data1/vikunja/files";
     port = 3456;
   };
@@ -64,6 +64,30 @@ in {
       port = cfg.port;
       frontendScheme = "http";
       frontendHostname = cfg.url;
+
+      database = {
+        type = "sqlite";
+        path = cfg.db_path;
+      };
+
+      settings = {
+        service = {
+        # If enabled, Vikunja will send an email to everyone who is either 
+        # assigned to a task or created it when a task reminder is due.
+        enableemailreminders = false;
+        # Whether to let new users registering themselves or not
+        enableregistration = false;
+        # The maximum size clients will be able to request for user avatars.
+        # If clients request a size bigger than this, it will be changed on the fly.
+        maxavatarsize = 4096;
+        # The duration of the issued JWT tokens in seconds.
+        jwtttl = 2592000;
+        # The duration of the "remember me" time in seconds. When the login request is
+        # made with the long param set, the token returned will be valid for this period.
+        jwtttllong = 25920000;
+        maxitemsperpage = 100;
+      };
+      };
       
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
