@@ -22,6 +22,7 @@
               ./modules/cloudflared.nix
               ./modules/nginx.nix
               ./modules/vikunja.nix
+              ./modules/authentik.nix
               {
                vikunja = {
                   enable = true;
