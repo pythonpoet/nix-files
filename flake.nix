@@ -18,6 +18,7 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
+              ./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
               ./modules/nginx.nix
