@@ -23,7 +23,7 @@
               ./modules/cloudflared.nix
               ./modules/nginx.nix
               ./modules/vikunja.nix
-              ./modules/authentik.nix
+              #./modules/authentik.nix
               {
                 age = {
                   # identityPaths= [
