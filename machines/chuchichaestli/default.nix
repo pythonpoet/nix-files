@@ -75,6 +75,7 @@
    cloudflared
    agenix-cli
    rbw
+   pinentry
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
