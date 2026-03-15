@@ -30,16 +30,16 @@
                   #   "/home/david/.ssh/id_ed25519"
                   #   "/root/.ssh/id_ed25519"
                   # ];
-                  secrets.borg.file = "/home/david/dotfiles/secrets/borg.age";
-                  secrets.vaultwarden.file = "/home/david/dotfiles/secrets/vaultwarden.age";
-                  secrets.authentik.file = "/home/david/dotfiles/secrets/authentik.age";
-                  secrets.maxmind-licence.file = "/home/david/dotfiles/secrets/maxmind-licence.age";
+                  # secrets.borg.file = "/home/david/dotfiles/secrets/borg.age";
+                  # secrets.vaultwarden.file = "/home/david/dotfiles/secrets/vaultwarden.age";
+                  # secrets.authentik.file = "/home/david/dotfiles/secrets/authentik.age";
+                  # secrets.maxmind-licence.file = "/home/david/dotfiles/secrets/maxmind-licence.age";
 
-                  secrets.vikunja-config = {
-                    file = "/home/david/dotfiles/secrets/vikunja-config.age";
-                    mode = "0440";
-                    group = "keys"; 
-                  };
+                  # secrets.vikunja-config = {
+                  #   file = "/home/david/dotfiles/secrets/vikunja-config.age";
+                  #   mode = "0440";
+                  #   group = "keys"; 
+                  # };
                 };
                vikunja = {
                   enable = true;
