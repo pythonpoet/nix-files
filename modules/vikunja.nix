@@ -9,11 +9,10 @@ with lib; let
   # Default values
   vikunjaDefaults = {
     url = "vikunja.davidwild.ch";
-    db_path = "/home/david/vikunja/db/vikunja.db";
-    files_path = "/data1/vikunja/files";
+    db_path = "/var/lib/vikunja/vikunja.db";
+    files_path = "/var/lib/vikunja/files";
     port = 3456;
   };
-  patchedConfigPath = "/var/lib/vikunja/config.patched.yaml";
   cfg = config.vikunja // vikunjaDefaults;
 
 in {
