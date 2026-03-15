@@ -18,7 +18,7 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              ./security/secrets.nix
+              #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
               ./modules/nginx.nix
@@ -47,9 +47,9 @@
                   # files_path = "/data1/vikunja/files";
                   #secretConfigFile = age.secrets.vikunja-config.path;
                 };
-                authentik = {
-                  enable = false;
-                };
+                # authentik = {
+                #   enable = false;
+                # };
               }
               agenix.nixosModules.default
               home-manager.nixosModules.home-manager
