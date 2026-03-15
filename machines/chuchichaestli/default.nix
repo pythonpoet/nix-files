@@ -74,7 +74,7 @@
    tmux
    cloudflared
    agenix-cli
-   bitwarden-cli
+   #bitwarden-cli
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
