@@ -57,6 +57,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.david = { ... }: {
+                  home.stateVersion = "26.05";
                   home.sessionVariables = {
                     SSH_AUTH_SOCK = "/home/david/.bitwarden-ssh-agent.sock";
                   };
