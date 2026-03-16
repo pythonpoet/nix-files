@@ -59,7 +59,7 @@
                 home-manager.users.david = { ... }: {
                   home.stateVersion = "26.05";
                   home.sessionVariables = {
-                    home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
+                    SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
                   };
                 };
               }
