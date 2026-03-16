@@ -62,7 +62,6 @@
                     enableCompletion = true;
                     autosuggestion.enable = true;
                     syntaxHighlighting.enable = true;
-                    zsh-autoenv.enable = true;
                   };
                   home.stateVersion = "26.05";
                   home.sessionVariables = {
