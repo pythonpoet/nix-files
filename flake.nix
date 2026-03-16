@@ -58,6 +58,7 @@
                 home-manager.useUserPackages = true;
                 home-manager.users.david = { ... }: {
                   programs.zsh.enable = true;
+                  shell = pkgs.zsh;
                   home.stateVersion = "26.05";
                   home.sessionVariables = {
                     SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
