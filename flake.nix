@@ -56,12 +56,13 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.david = {pkgs, ... }: {
+                home-manager.users.david = { ... }: {
                   programs.zsh = {
                     enable = true;
                     enableCompletion = true;
                     autosuggestions.enable = true;
                     syntaxHighlighting.enable = true;
+                    zsh-autoenv.enable = true;
                   };
                   home.stateVersion = "26.05";
                   home.sessionVariables = {
