@@ -59,7 +59,7 @@
                 home-manager.users.david = { ... }: {
                   home.stateVersion = "26.05";
                   home.sessionVariables = {
-                    SSH_AUTH_SOCK = "/home/david/.bitwarden-ssh-agent.sock";
+                    home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
                   };
                 };
               }
