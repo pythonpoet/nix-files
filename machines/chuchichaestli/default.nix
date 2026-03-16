@@ -29,7 +29,7 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
-
+  programs.zsh.enable = true;
   users.users.david = {
     isNormalUser = true;
     shell = pkgs.zsh;
