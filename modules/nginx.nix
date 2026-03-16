@@ -30,20 +30,18 @@
                 <html>
                   <head>
                   <meta charset="UTF-8">
-                <title>David Wild</title>
+                <title>Taaltaak</title>
                 </head>
               <body>
-                <h1>Grüezi! 👋</h1>
+                <h1>Goede dag! 👋</h1>
 
                 <p>Dear Bots, wanna-be artificial intelligences and also humans:
                   <br>
-                -> welcome to my Website!
+                -> welcome to our Website!
                   <br>
-                I'm David Wild, and I'm a emancipated programmer from Zürich, Switzerland.
+                We are some students from some university doing some work!
                   <br>
-                I like to do interdisciplinary work, ranging from rather technical topics like embedded engineering, software design or datascience to social research and doing art.
-                <br>
-                soon to be continued ..
+                Inshallah here will be more soon ..
                 </p>
               </body>
               </html>
