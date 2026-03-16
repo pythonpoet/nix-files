@@ -62,7 +62,7 @@
                     SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/rbw/ssh-agent-socket";
                   };
                 };
-                programs.ssh.startAgent = true;
+                programs.ssh.startAgent = false;
 
               }
             ];
