@@ -56,7 +56,7 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.david = { ... }: {
+                home-manager.users.david = {pkgs, ... }: {
                   programs.zsh.enable = true;
                   shell = pkgs.zsh;
                   home.stateVersion = "26.05";
