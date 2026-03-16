@@ -64,6 +64,7 @@
                   };
                 };
                 programs.ssh.startAgent = false;
+                programs.zsh.enable = true;
 
               }
             ];
