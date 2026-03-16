@@ -32,6 +32,7 @@
 
   users.users.david = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "david";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
@@ -48,6 +49,7 @@
   users.users.tonda = {
     isNormalUser = true;
     description = "Tonda";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = 
