@@ -75,7 +75,7 @@
    curl
    tmux
    cloudflared
-   agenix-cli
+   ragenix
    rbw
    pinentry-curses
   ];
