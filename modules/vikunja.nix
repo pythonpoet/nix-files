@@ -14,7 +14,8 @@ with lib; let
     port = 3456;
   };
   patchedConfigPath = "/var/lib/vikunja/config.patched.yaml";
-  cfg = config.vikunja // vikunjaDefaults;
+  cfg = vikunjaDefaults // config.vikunja;
+
 
 in {
   options.vikunja = {
@@ -98,18 +99,16 @@ in {
           local.enabled = false;
           openid = {
             enabled = true;
-            providers = [
+            providers = 
               {
                 name = "authentik";
                 authurl = "https://auth.davidwild.ch/application/o/vikunja/";
                 logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
                 clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
-                clientsecret = {
-                  file = config.age.secrets.vikunja-client-secret.path;
-                };
-                scope = "openid profile email";
+                clientsecret = "secrets";
+                
               }
-            ];
+            
           };
         };
       };
