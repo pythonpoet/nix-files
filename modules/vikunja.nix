@@ -102,10 +102,10 @@ in {
             providers = 
               {
                 name = "authentik";
-                authurl = "'https://auth.davidwild.ch/application/o/vikunja/'";
-                logouturl = "'https://auth.davidwild.ch/application/o/vikunja/end-session/'";
-                clientid = "'NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau'";
-                clientsecret = "'secrets'";
+                authurl = "\nhttps://auth.davidwild.ch/application/o/vikunja/\n";
+                logouturl = "\nhttps://auth.davidwild.ch/application/o/vikunja/end-session/\n";
+                clientid = "\nNYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau\n";
+                clientsecret = "secrets";
                 
               };
             
