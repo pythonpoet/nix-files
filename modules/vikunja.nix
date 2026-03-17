@@ -107,7 +107,7 @@ in {
                 clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
                 clientsecret = "secrets";
                 
-              }
+              };
             
           };
         };
