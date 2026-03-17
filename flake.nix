@@ -41,13 +41,11 @@
                   };
                   secrets.vikunja-client-secret= {
                     file = "/home/david/nix-files/security/vikunja-client-secret.age";
-                    mode = "0440";
-                    group = "keys"; 
+                    
                   };
                   secrets.vikunja-jwt = {
                     file = "/home/david/nix-files/security/vikunja-jwt.age";
-                    mode = "0440";
-                    group = "keys"; 
+                    
                   };
                 };
                vikunja = {
