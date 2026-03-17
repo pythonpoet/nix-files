@@ -108,7 +108,7 @@ in {
               clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
               clientsecret = {
                 file = config.age.secrets.vikunja-client-secret.path;
-              }
+              };
             };
           };
             
