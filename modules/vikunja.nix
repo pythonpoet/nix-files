@@ -89,7 +89,9 @@ in {
         jwtttllong = 25920000;
         maxitemsperpage = 100;
         # JWTsecret gets incerted by environment file
-        jwtsecret = "{jwt_secret}";
+        jwtsecret = {
+          file = config.age.secrets.vikunja-config.path;
+        };
         };
         #Configure openid
         auth = {
