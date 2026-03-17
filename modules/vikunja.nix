@@ -89,7 +89,7 @@ in {
         maxitemsperpage = 100;
         # JWTsecret gets incerted by environment file
         JWTSecret = "{jwt_secret}";
-        
+
         #Configure openid
         auth = {
           local.enabled = true;
@@ -104,7 +104,7 @@ in {
                 clientsecret = "{client_secret}";
                 scope = "openid profile email";
               };
-            }
+            };
           };
         };
       };
