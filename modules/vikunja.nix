@@ -106,7 +106,9 @@ in {
               authurl = "https://auth.davidwild.ch/application/o/vikunja/";
               logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
               clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
-              clientsecret = "secrets"; # Replace with your actual secret
+              clientsecret = {
+                file = config.age.secrets.vikunja-client-secret.path;
+              }
             };
           };
             
