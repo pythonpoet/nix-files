@@ -88,7 +88,7 @@ in {
         jwtttllong = 25920000;
         maxitemsperpage = 100;
         # JWTsecret gets incerted by environment file
-        JWTSecret = "{jwt_secret}";
+        #JWTSecret = "{jwt_secret}";
 
         #Configure openid
         auth = {
@@ -101,7 +101,7 @@ in {
                 authurl = "https://auth.davidwild.ch/application/o/vikunja/";
                 logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
                 clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
-                clientsecret = "{client_secret}";
+                #clientsecret = "{client_secret}";
                 scope = "openid profile email";
               };
             };
@@ -111,6 +111,7 @@ in {
       };
       
     };
+    
     networking.firewall.allowedTCPPorts = [cfg.port];
   };
 }
