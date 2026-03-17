@@ -142,9 +142,7 @@ in {
       serviceConfig = {
         StateDirectory = "vikunja";
         ExecStart = lib.mkForce "${cfg.package}/bin/vikunja web --config ${patchedConfigPath}";
-        environment = {
-          VIKUNJA_CONFIG_PATH = patchedConfigPath;
-        };
+        environment.VIKUNJA_CONFIG_PATH = patchedConfigPath;
         ReadWritePaths = [
           cfg.db_path
           cfg.files_path
