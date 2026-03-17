@@ -9,7 +9,7 @@ in {
   # "email.age".publicKeys = [bernina_root];
   # "authentik.age".publicKeys = [bernina_root];
   "vikunja-config.age".publicKeys = [bernina_root chuchichaestli];
-  "vikunja-cliend-secret.age".publicKeys =  [bernina_root chuchichaestli];
+  "vikunja-client-secret.age".publicKeys =  [bernina_root chuchichaestli];
   "vikunja-jwt.age".publicKeys =  [bernina_root chuchichaestli];
   # "onlyoffice.age".publicKeys = [bernina_root];
   # "onlyofficesec.age".publicKeys = [bernina_root];
