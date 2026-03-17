@@ -116,5 +116,15 @@ in {
       };
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
+    systemd.services.vikunja = {
+  # ... existing code ...
+
+  serviceConfig = {
+  
+    # 1. Add this line:
+    SupplementaryGroups = [ "keys" ];
+
+  };
+};
   };
 }
