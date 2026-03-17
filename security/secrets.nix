@@ -2,12 +2,13 @@ let
   alpakapro = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAOr7hdJO0P2TBs5GH+XmOi7XoBT6LiAS7Ym6IEgM2H0 david@alpakapro";
   bernina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKOc1VdjIPZ92jdNqIkFkn1/C8viTw/7Fqr45bYw0RUA david@bernina";
   bernina_root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOKRkROOGrzi/GXpInvhN48oCLYEKIqZHZdP9RPqHi5M root@bernina";
+  chuchichaestli = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3MDQn6zqVwX2HX0bS2LtsvAhkXIt51bD/D+9b/5irt david@chuchichaestli";
 in {
   #"spotify.age".publicKeys = [mihai io];
   "borg.age".publicKeys = [bernina bernina_root];
   "email.age".publicKeys = [bernina_root];
   "authentik.age".publicKeys = [bernina_root];
-  "vikunja-config.age".publicKeys = [bernina_root];
+  "vikunja-config.age".publicKeys = [bernina_root chuchichaestli];
   "onlyoffice.age".publicKeys = [bernina_root];
   "onlyofficesec.age".publicKeys = [bernina_root];
   "onlyoffice-jwt.age".publicKeys = [bernina_root];
