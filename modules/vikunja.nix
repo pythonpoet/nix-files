@@ -8,7 +8,7 @@ with lib; let
 
   # Default values
   vikunjaDefaults = {
-    url = "vikunja.davidwild.ch";
+    url = "vikunja.taaltaak.org";
     db_path = "/var/lib/vikunja/vikunja.db";
     files_path = "/var/lib/vikunja/files";
     port = 3456;
