@@ -35,11 +35,11 @@
                   # secrets.authentik.file = "/home/david/dotfiles/secrets/authentik.age";
                   # secrets.maxmind-licence.file = "/home/david/dotfiles/secrets/maxmind-licence.age";
 
-                  # secrets.vikunja-config = {
-                  #   file = "/home/david/dotfiles/secrets/vikunja-config.age";
-                  #   mode = "0440";
-                  #   group = "keys"; 
-                  # };
+                  secrets.vikunja-config = {
+                    file = "/home/david/nix-files/security/vikunja-config.age";
+                    mode = "0440";
+                    group = "keys"; 
+                  };
                 };
                vikunja = {
                   enable = true;
