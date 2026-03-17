@@ -5,13 +5,13 @@ let
   chuchichaestli = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK3MDQn6zqVwX2HX0bS2LtsvAhkXIt51bD/D+9b/5irt david@chuchichaestli";
 in {
   #"spotify.age".publicKeys = [mihai io];
-  "borg.age".publicKeys = [bernina bernina_root];
-  "email.age".publicKeys = [bernina_root];
-  "authentik.age".publicKeys = [bernina_root];
+  # "borg.age".publicKeys = [bernina bernina_root];
+  # "email.age".publicKeys = [bernina_root];
+  # "authentik.age".publicKeys = [bernina_root];
   "vikunja-config.age".publicKeys = [bernina_root];
-  "onlyoffice.age".publicKeys = [bernina_root];
-  "onlyofficesec.age".publicKeys = [bernina_root];
-  "onlyoffice-jwt.age".publicKeys = [bernina_root];
-  "maxmind-licence.age".publicKeys = [bernina_root];
-  "vaultwarden.age".publicKeys = [bernina_root];
+  # "onlyoffice.age".publicKeys = [bernina_root];
+  # "onlyofficesec.age".publicKeys = [bernina_root];
+  # "onlyoffice-jwt.age".publicKeys = [bernina_root];
+  # "maxmind-licence.age".publicKeys = [bernina_root];
+  # "vaultwarden.age".publicKeys = [bernina_root];
 }
