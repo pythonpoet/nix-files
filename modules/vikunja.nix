@@ -133,7 +133,7 @@ in {
     StateDirectory = "vikunja";
     ExecStart = "${cfg.package}/bin/vikunja";
     Restart = "always";
-    EnvironmentFile = cfg.environmentFiles;
+    
   };
 };
   };
