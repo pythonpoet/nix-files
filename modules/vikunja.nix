@@ -139,10 +139,15 @@ in {
       wants = [ "vikunja-config-setup.service" ];
       after = [ "vikunja-config-setup.service" ];
 
+      environment = {
+        VIKUNJA_CONFIG_PATH = patchedConfigPath;
+      };
+
+
       serviceConfig = {
         StateDirectory = "vikunja";
         #ExecStart = lib.mkForce "${cfg.package}/bin/vikunja web";
-        environment.VIKUNJA_CONFIG_PATH = patchedConfigPath;
+        
         ReadWritePaths = [
           cfg.db_path
           cfg.files_path
