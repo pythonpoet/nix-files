@@ -116,14 +116,24 @@ in {
       };
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
+     
     systemd.services.vikunja = {
   # ... existing code ...
 
   serviceConfig = {
-  
+    Type = "simple";
+    DynamicUser = true;
+    
     # 1. Add this line:
     SupplementaryGroups = [ "keys" ];
 
+    # 2. To ensure the secret is actually there when the service starts:
+    # RequiresMountsFor = [ "/run/agenix" ];
+
+    StateDirectory = "vikunja";
+    ExecStart = "${cfg.package}/bin/vikunja";
+    Restart = "always";
+    EnvironmentFile = cfg.environmentFiles;
   };
 };
   };
