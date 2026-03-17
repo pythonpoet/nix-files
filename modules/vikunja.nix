@@ -64,6 +64,8 @@ in {
       frontendScheme = "http";
       frontendHostname = cfg.url;
 
+      environmentFiles = [config.age.secrets.vikunja-config.path];
+
       database = {
         type = "sqlite";
         path = cfg.db_path;
@@ -85,6 +87,26 @@ in {
         # made with the long param set, the token returned will be valid for this period.
         jwtttllong = 25920000;
         maxitemsperpage = 100;
+        # JWTsecret gets incerted by environment file
+        JWTSecret = "{jwt_secret}";
+        
+        #Configure openid
+        auth = {
+          local.enabled = true;
+          openid = {
+            enabled = true;
+            providers = {
+              authentik = {
+                name = "authentik";
+                authurl = "https://auth.davidwild.ch/application/o/vikunja/";
+                logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
+                clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
+                clientsecret = "{client_secret}";
+                scope = "openid profile email";
+              };
+            }
+          };
+        };
       };
       };
       
