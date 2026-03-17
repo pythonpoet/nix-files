@@ -14,7 +14,7 @@ with lib; let
     port = 3456;
   };
   patchedConfigPath = "/var/lib/vikunja/config.patched.yaml";
-  cfg = vikunjaDefaults // config.vikunja;
+  cfg = config.vikunja // vikunjaDefaults;
 
 
 in {
