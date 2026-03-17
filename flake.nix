@@ -26,10 +26,9 @@
               #./modules/authentik.nix
               {
                 age = {
-                  # identityPaths= [
-                  #   "/home/david/.ssh/id_ed25519"
-                  #   "/root/.ssh/id_ed25519"
-                  # ];
+                  identityPaths= [
+                    "/home/david/.ssh/id_ed25519"
+                  ];
                   # secrets.borg.file = "/home/david/dotfiles/secrets/borg.age";
                   # secrets.vaultwarden.file = "/home/david/dotfiles/secrets/vaultwarden.age";
                   # secrets.authentik.file = "/home/david/dotfiles/secrets/authentik.age";
