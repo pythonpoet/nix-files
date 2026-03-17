@@ -146,7 +146,7 @@ in {
           cfg.db_path
           cfg.files_path
         ];
-        BindPaths = [ "/data1/vikunja/db" ];
+        
         SupplementaryGroups = [ "keys" ];
         ReadOnlyPaths = [ "/run/agenix" ];
       };
