@@ -99,15 +99,16 @@ in {
           local.enabled = false;
           openid = {
             enabled = true;
-            providers = 
-              {
-                name = "authentik";
-                authurl = "https://auth.davidwild.ch/application/o/vikunja/";
-                logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
-                clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
-                clientsecret = "secrets";
-                
-              };
+           providers = {
+            # This 'authentik' key is the "mystring" / ID Vikunja uses for the redirect URL
+            authentik = {
+              name = "authentik";
+              authurl = "https://auth.davidwild.ch/application/o/vikunja/";
+              logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
+              clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
+              clientsecret = "secrets"; # Replace with your actual secret
+            };
+          };
             
           };
         };
