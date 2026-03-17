@@ -117,52 +117,7 @@ in {
       };
       
     };
-      systemd.services.vikunja-config-setup = {
-      description = "Prepare patched Vikunja config with secrets";
-      wantedBy = [ "multi-user.target" ];
-      before = [ "vikunja.service" ];
-      after = [ "agenix.service" ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        User = "root";
-        StateDirectory = "vikunja";
-      };
-
-      script = ''
-        source ${cfg.secretConfigFile}
-
-        ${pkgs.gnused}/bin/sed -e "s|{client_secret}|$client_secret|g" \
-                              -e "s|{jwt_secret}|$jwt_secret|g" \
-                              /etc/vikunja/config.yaml > ${patchedConfigPath}
-
-        chmod 640 ${patchedConfigPath}
-      '';
-    };
-
-    systemd.services.vikunja = {
-      wants = [ "vikunja-config-setup.service" ];
-      after = [ "vikunja-config-setup.service" ];
-
-      environment = {
-        VIKUNJA_SERVICE_ROOTPATH = patchedConfigPath;
-      };
-
-
-      serviceConfig = {
-        StateDirectory = "vikunja";
-        #ExecStart = lib.mkForce "${cfg.package}/bin/vikunja web";
-        
-        ReadWritePaths = [
-          cfg.db_path
-          cfg.files_path
-        ];
-        
-        SupplementaryGroups = [ "keys" ];
-        ReadOnlyPaths = [ "/run/agenix" ];
-      };
-    };
+      
     
     networking.firewall.allowedTCPPorts = [cfg.port];
   };
