@@ -140,7 +140,7 @@ in {
       after = [ "vikunja-config-setup.service" ];
 
       environment = {
-        VIKUNJA_CONFIG_PATH = patchedConfigPath;
+        VIKUNJA_SERVICE_ROOTPATH = patchedConfigPath;
       };
 
 
