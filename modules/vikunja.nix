@@ -13,6 +13,7 @@ with lib; let
     files_path = "/var/lib/vikunja/files";
     port = 3456;
   };
+  patchedConfigPath = "/var/lib/vikunja/config.patched.yaml";
   cfg = config.vikunja // vikunjaDefaults;
 
 in {
@@ -64,7 +65,7 @@ in {
       frontendScheme = "http";
       frontendHostname = cfg.url;
 
-      environmentFiles = [config.age.secrets.vikunja-config.path];
+      #environmentFiles = [config.age.secrets.vikunja-config.path];
 
       database = {
         type = "sqlite";
@@ -88,28 +89,67 @@ in {
         jwtttllong = 25920000;
         maxitemsperpage = 100;
         # JWTsecret gets incerted by environment file
-        #JWTSecret = "{jwt_secret}";
-
+        jwtsecret = "{jwt_secret}";
+        };
         #Configure openid
         auth = {
           local.enabled = false;
           openid = {
             enabled = true;
-            providers = {
-              authentik = {
+            providers = [
+              {
                 name = "authentik";
                 authurl = "https://auth.davidwild.ch/application/o/vikunja/";
                 logouturl = "https://auth.davidwild.ch/application/o/vikunja/end-session/";
                 clientid = "NYytqakPqAeNuCcDmHcRcge10ADMm7o4yrxUGDau";
-                #clientsecret = "{client_secret}";
+                clientsecret = "{client_secret}";
                 scope = "openid profile email";
-              };
-            };
+              }
+            ];
           };
         };
       };
-      };
       
+    };
+      systemd.services.vikunja-config-setup = {
+      description = "Prepare patched Vikunja config with secrets";
+      wantedBy = [ "multi-user.target" ];
+      before = [ "vikunja.service" ];
+      after = [ "agenix.service" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        User = "root";
+        StateDirectory = "vikunja";
+      };
+
+      script = ''
+        source ${cfg.secretConfigFile}
+
+        ${pkgs.gnused}/bin/sed -e "s|{client_secret}|$client_secret|g" \
+                              -e "s|{jwt_secret}|$jwt_secret|g" \
+                              /etc/vikunja/config.yaml > ${patchedConfigPath}
+
+        chmod 640 ${patchedConfigPath}
+      '';
+    };
+
+    systemd.services.vikunja = {
+      wants = [ "vikunja-config-setup.service" ];
+      after = [ "vikunja-config-setup.service" ];
+
+      serviceConfig = {
+        StateDirectory = "vikunja";
+        ExecStart = lib.mkForce "${cfg.package}/bin/vikunja web --config ${patchedConfigPath}";
+        ReadWritePaths = [
+          cfg.db_path
+          cfg.files_path
+        ];
+        BindPaths = [ "/data1/vikunja/db" ];
+        SupplementaryGroups = [ "keys" ];
+        ReadOnlyPaths = [ "/run/agenix" ];
+      };
     };
     
     networking.firewall.allowedTCPPorts = [cfg.port];
