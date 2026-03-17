@@ -8,7 +8,7 @@ in {
   "borg.age".publicKeys = [bernina bernina_root];
   "email.age".publicKeys = [bernina_root];
   "authentik.age".publicKeys = [bernina_root];
-  "vikunja-config.age".publicKeys = [bernina_root chuchichaestli];
+  "vikunja-config.age".publicKeys = [bernina_root];
   "onlyoffice.age".publicKeys = [bernina_root];
   "onlyofficesec.age".publicKeys = [bernina_root];
   "onlyoffice-jwt.age".publicKeys = [bernina_root];
