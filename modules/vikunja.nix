@@ -96,7 +96,7 @@ in {
         };
         #Configure openid
         auth = {
-          local.enabled = false;
+          local.enabled = true;
           openid = {
             enabled = true;
            providers = {
