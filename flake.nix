@@ -13,14 +13,14 @@
     taaltaak.url = "git+ssh://git@github.com/pythonpoet/taaltaak?ref=main";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, taaltaak}:
     {
       nixosConfigurations = {
         chuchichaestli =
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              inputs.taaltaak.nixosModules.default
+              taaltaak.nixosModules.default
               #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
