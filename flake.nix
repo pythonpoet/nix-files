@@ -10,7 +10,7 @@
     };
     agenix.url = "github:ryantm/agenix";
 
-    #taaltaak.url = "github:pythonpoet/taaltaak/main";
+    taaltaak.url = "github:pythonpoet/taaltaak/main";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix }@inputs:
@@ -20,7 +20,7 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              #inputs.taaltaak.nixosModules.default
+              inputs.taaltaak.nixosModules.default
               #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
@@ -59,7 +59,7 @@
                   # files_path = "/data1/vikunja/files";
                   #secretConfigFile = age.secrets.vikunja-config.path;
                 };
-                #taaltaak.enable = true;
+                taaltaak.enable = true;
                 # authentik = {
                 #   enable = false;
                 # };
