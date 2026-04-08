@@ -40,7 +40,7 @@
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/pythonpoet.keys";
-        sha256 = "Lb87eaVnCLsOkBaZZ7magLZbpJ4eMgdoOFbvGLtRJ1E=";
+        sha256 = "";
       });
     in
     builtins.filter (key: key != "") 
