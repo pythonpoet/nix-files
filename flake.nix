@@ -20,7 +20,7 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              inputs.taaltaak.nixosModules.default
+              #inputs.taaltaak.nixosModules.default
               #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
