@@ -82,7 +82,8 @@
                     EDITOR = "hx";
                   };
                 };
-                programs.ssh.startAgent = false;
+                # disable for rbw
+                programs.ssh.startAgent = true;
                 
 
               }
