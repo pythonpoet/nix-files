@@ -10,7 +10,7 @@
     };
     agenix.url = "github:ryantm/agenix";
 
-    taaltaak.url = "github:pythonpoet/taaltaak/main";
+    #taaltaak.url = "github:pythonpoet/taaltaak/main";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, taaltaak }@inputs:
@@ -59,7 +59,7 @@
                   # files_path = "/data1/vikunja/files";
                   #secretConfigFile = age.secrets.vikunja-config.path;
                 };
-                taaltaak.enable = true;
+                #taaltaak.enable = true;
                 # authentik = {
                 #   enable = false;
                 # };
