@@ -10,7 +10,7 @@
     };
     agenix.url = "github:ryantm/agenix";
 
-    taaltaak.url = "github:pythonpoet/taaltaak/main";
+    taaltaak.url = "git+ssh://git@github.com/pythonpoet/taaltaak?ref=main";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix }@inputs:
