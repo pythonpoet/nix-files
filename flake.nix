@@ -13,7 +13,7 @@
     taaltaak.url = "github:pythonpoet/taaltaak";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix }:
+  outputs = { self, nixpkgs, home-manager, agenix, taaltaak }@inputs:
     {
       nixosConfigurations = {
         chuchichaestli =
