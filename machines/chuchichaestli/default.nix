@@ -64,7 +64,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /opt/taaltaak 0770 taaltaak taaltaak -"
+    "Z /opt/taaltaak 0770 taaltaak taaltaak -"
   ];
   
    
