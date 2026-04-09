@@ -34,7 +34,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "david";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "taaltaak"];
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = 
     let
@@ -50,7 +50,7 @@
     isNormalUser = true;
     description = "Tonda";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "taaltaak"];
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = 
     let
