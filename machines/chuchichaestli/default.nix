@@ -62,6 +62,10 @@
     builtins.filter (key: key != "") 
       (lib.strings.splitString "\n" keysContent);
   };
+
+  systemd.tmpfiles.rules = [
+    "d /opt/taaltaak 0770 taaltaak taaltaak -"
+  ];
   
    
   # List packages installed in system profile. To search, run:
