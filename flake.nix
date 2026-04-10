@@ -61,7 +61,7 @@
                 };
                 services.taaltaak = {
                   enable = true;
-                }
+                };
                 # authentik = {
                 #   enable = false;
                 # };
