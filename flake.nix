@@ -59,7 +59,9 @@
                   # files_path = "/data1/vikunja/files";
                   #secretConfigFile = age.secrets.vikunja-config.path;
                 };
-                services.taaltaak.enable = true;
+                services.taaltaak = {
+                  enable = true;
+                }
                 # authentik = {
                 #   enable = false;
                 # };

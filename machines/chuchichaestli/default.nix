@@ -34,7 +34,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "david";
-    extraGroups = [ "networkmanager" "wheel" "taaltaak"];
+    extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = 
     let
@@ -50,7 +50,7 @@
     isNormalUser = true;
     description = "Tonda";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "taaltaak"];
+    extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = 
     let
@@ -61,6 +61,10 @@
     in
     builtins.filter (key: key != "") 
       (lib.strings.splitString "\n" keysContent);
+  };
+  # Add users to taaltaak group
+  users.groups.taaltaak = {
+    members = [ "david" "tonda" ];
   };
 
   systemd.tmpfiles.rules = [
