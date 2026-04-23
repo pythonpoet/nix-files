@@ -59,15 +59,15 @@
                   # files_path = "/data1/vikunja/files";
                   #secretConfigFile = age.secrets.vikunja-config.path;
                 };
-                # services.taalbubbl = {
-                #   enable = true;
-                #   database = {
-                #     name = "taalbubbl";
-                #     user = "taalbubbl";
-                #     host = "127.0.0.1";
-                #     port = 5432;
-                #   };
-                # };
+                services.taalbubbl = {
+                  enable = true;
+                  database = {
+                    name = "taalbubbl";
+                    user = "taalbubbl";
+                    host = "127.0.0.1";
+                    port = 5432;
+                  };
+                };
                 # authentik = {
                 #   enable = false;
                 # };
