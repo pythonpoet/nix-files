@@ -10,17 +10,17 @@
     };
     agenix.url = "github:ryantm/agenix";
 
-    taaltaak.url = "git+ssh://git@github.com/taalbubbl/taalbubbl?ref=main";
+    taalbubbl.url = "git+ssh://git@github.com/taalbubbl/taalbubbl?ref=main";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, taaltaak}:
+  outputs = { self, nixpkgs, home-manager, agenix, taalbubbl}:
     {
       nixosConfigurations = {
         chuchichaestli =
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              taaltaak.nixosModules.default
+              taalbubbl.nixosModules.default
               #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix

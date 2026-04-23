@@ -63,12 +63,12 @@
       (lib.strings.splitString "\n" keysContent);
   };
   # Add users to taaltaak group
-  users.groups.taaltaak = {
+  users.groups.taalbubbl = {
     members = [ "david" "tonda" ];
   };
 
   systemd.tmpfiles.rules = [
-    "Z /opt/taaltaak 0770 taaltaak taaltaak -"
+    "Z /opt/taalbubbl 0770 taalbubbl taalbubbl -"
   ];
   
    
