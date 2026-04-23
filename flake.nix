@@ -64,7 +64,7 @@
                   database = {
                     name = "taalbubbl";
                     user = "taalbubbl";
-                    host = "127.0.0.1";
+                    host = "/run/postgresql";
                     port = 5432;
                   };
                 };
