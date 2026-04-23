@@ -10,7 +10,7 @@
     };
     agenix.url = "github:ryantm/agenix";
 
-    taalbubbl.url = "git+ssh://git@github.com/taalbubbl/taalbubbl?ref=main";
+    taalbubbl.url = "git+ssh://git@github.com/taalbubbl/taalbubbl?ref=prod";
   };
 
   outputs = { self, nixpkgs, home-manager, agenix, taalbubbl}:
