@@ -38,16 +38,16 @@
   };
 
   security.sudo.extraRules = [
-    {
-      users = [ "david" "tonda"];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
+  {
+    users = [ "david" "tonda" ];
+    commands = [
+      { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
+      { command = "/run/current-system/sw/bin/nix-env";       options = [ "NOPASSWD" ]; }
+      { command = "/run/current-system/sw/bin/systemctl";     options = [ "NOPASSWD" ]; }
+      { command = "/nix/store/*";                             options = [ "NOPASSWD" ]; }
+    ];
+  }
+];
 
 
   # Set your time zone.
