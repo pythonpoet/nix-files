@@ -26,7 +26,16 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  # Issue with ms edge tts feature. 
+  # It wanted to connect to ipv6 but there was a dns issue
+  # switching to ipv4 solves the issue
   networking.enableIPv6 = false;
+
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.all.disable_ipv6" = 1;
+    "net.ipv6.conf.enp2s0.disable_ipv6" = 1;
+  };
 
 
   # Set your time zone.
