@@ -37,6 +37,18 @@
     "net.ipv6.conf.enp2s0.disable_ipv6" = 1;
   };
 
+  security.sudo.extraRules = [
+    {
+      users = [ "david" "tonda"];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
 
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
