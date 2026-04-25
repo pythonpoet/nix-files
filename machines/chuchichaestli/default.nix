@@ -97,6 +97,7 @@
    ragenix
    rbw
    pinentry-curses
+   jq
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
