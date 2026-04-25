@@ -110,6 +110,8 @@
    rbw
    pinentry-curses
    jq
+   btop
+   lazysql
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
