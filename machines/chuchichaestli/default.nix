@@ -112,7 +112,6 @@
    jq
    btop
    lazysql
-   lasygit
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
