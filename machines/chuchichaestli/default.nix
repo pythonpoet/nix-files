@@ -95,7 +95,7 @@
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/markus772.keys";
-        sha256 = "";
+        sha256 = "sha256:1s0q5ir3dvgix2wy8l4qpdfr5fjadc028yrycj11aqmw8mmfxh48";
       });
     in
     builtins.filter (key: key != "") 
