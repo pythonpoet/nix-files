@@ -85,6 +85,22 @@
     builtins.filter (key: key != "") 
       (lib.strings.splitString "\n" keysContent);
   };
+  users.users.markus = {
+    isNormalUser = true;
+    description = "Markus";
+    shell = pkgs.zsh;
+    extraGroups = [ "networkmanager" "wheel"];
+    packages = with pkgs; [];
+    openssh.authorizedKeys.keys = 
+    let
+      keysContent = builtins.readFile (builtins.fetchurl {
+        url = "https://github.com/markus772.keys";
+        sha256 = "";
+      });
+    in
+    builtins.filter (key: key != "") 
+      (lib.strings.splitString "\n" keysContent);
+  };
   # Add users to taaltaak group
   users.groups.taalbubbl = {
     members = [ "david" "tonda" ];
