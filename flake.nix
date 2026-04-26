@@ -21,47 +21,41 @@
             system = "x86_64-linux";
             modules = [
               taalbubbl.nixosModules.default
-              #./security/secrets.nix
               ./machines/chuchichaestli/default.nix
               ./modules/cloudflared.nix
               ./modules/nginx.nix
               ./modules/vikunja.nix
-              #./modules/authentik.nix
+
+              # Plain attribute set — no config references needed here
               {
                 age = {
-                  identityPaths= [
-                    "/home/david/.ssh/id_ed25519"
-                  ];
-                  # secrets.borg.file = "/home/david/dotfiles/secrets/borg.age";
-                  # secrets.vaultwarden.file = "/home/david/dotfiles/secrets/vaultwarden.age";
-                  # secrets.authentik.file = "/home/david/dotfiles/secrets/authentik.age";
-                  # secrets.maxmind-licence.file = "/home/david/dotfiles/secrets/maxmind-licence.age";
-
+                  identityPaths = [ "/home/david/.ssh/id_ed25519" ];
                   secrets.vikunja-config = {
                     file = "/home/david/nix-files/security/vikunja-config.age";
                     mode = "0440";
-                    group = "keys"; 
+                    group = "keys";
                   };
-                  secrets.vikunja-client-secret= {
+                  secrets.vikunja-client-secret = {
                     file = "/home/david/nix-files/security/vikunja-client-secret.age";
                     mode = "0440";
-                    group = "keys"; 
+                    group = "keys";
                   };
                   secrets.vikunja-jwt = {
                     file = "/home/david/nix-files/security/vikunja-jwt.age";
                     mode = "0440";
-                    group = "keys"; 
+                    group = "keys";
                   };
                   secrets.taalbubbl = {
                     file = "/home/david/nix-files/security/taalbubbl.age";
                   };
                 };
-               vikunja = {
+                vikunja = {
                   enable = true;
-                  # db_path = "/data1/vikunja/db/vikunja.db";
-                  # files_path = "/data1/vikunja/files";
-                  #secretConfigFile = age.secrets.vikunja-config.path;
                 };
+              }
+
+              # Separate module function — gives access to config
+              ({ config, ... }: {
                 services.taalbubbl = {
                   enable = true;
                   database = {
@@ -72,10 +66,8 @@
                   };
                   environmentFile = config.age.secrets.taalbubbl.path;
                 };
-                # authentik = {
-                #   enable = false;
-                # };
-              }
+              })
+
               agenix.nixosModules.default
               home-manager.nixosModules.home-manager
               {
@@ -94,10 +86,7 @@
                     EDITOR = "hx";
                   };
                 };
-                # disable for rbw
                 programs.ssh.startAgent = true;
-                
-
               }
             ];
       };
