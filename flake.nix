@@ -70,7 +70,7 @@
                     host = "/run/postgresql";
                     port = 5432;
                   };
-                  environmentFile = age.secrets.taalbubbl.path;
+                  environmentFile = config.age.secrets.taalbubbl.path;
                 };
                 # authentik = {
                 #   enable = false;
