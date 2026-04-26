@@ -54,7 +54,7 @@
                   };
                   secrets.taalbubbl = {
                     file = "/home/david/nix-files/security/taalbubbl.age";
-                  }
+                  };
                 };
                vikunja = {
                   enable = true;
