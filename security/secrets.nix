@@ -12,7 +12,7 @@ in {
   "vikunja-config.age".publicKeys = [bernina_root chuchichaestli tonda];
   "vikunja-client-secret.age".publicKeys =  [bernina_root chuchichaestli tonda];
   "vikunja-jwt.age".publicKeys =  [bernina_root chuchichaestli tonda];
-  "taalbubbl.age".publicKeys = [bernina_root chuchichaestli tonda]
+  "taalbubbl.age".publicKeys = [bernina_root chuchichaestli tonda];
   # "onlyoffice.age".publicKeys = [bernina_root];
   # "onlyofficesec.age".publicKeys = [bernina_root];
   # "onlyoffice-jwt.age".publicKeys = [bernina_root];

@@ -2,7 +2,7 @@
   description = "Pythonpoets nix files";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:taalbubbl/nixpkgs/master";
     
     home-manager = {
       url = "github:nix-community/home-manager";
