@@ -52,6 +52,9 @@
                     mode = "0440";
                     group = "keys"; 
                   };
+                  secrets.taalbubbl = {
+                    file = "/home/david/nix-files/security/taalbubbl.age";
+                  }
                 };
                vikunja = {
                   enable = true;
@@ -67,6 +70,7 @@
                     host = "/run/postgresql";
                     port = 5432;
                   };
+                  environmentFile = age.secrets.taalbubbl.path;
                 };
                 # authentik = {
                 #   enable = false;
