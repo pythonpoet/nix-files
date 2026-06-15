@@ -59,9 +59,15 @@ in {
 
         session = {
           name = "authelia_session";
+          expiration = "12h";
+          inactivity = "1h";
+          remember_me = "1M";
           cookies = [{
             domain = cfg.sessionDomain;
             authelia_url = "https://${cfg.domain}";
+            expiration = "12h";
+            inactivity = "1h";
+            remember_me = "1M";
           }];
         };
 
