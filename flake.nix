@@ -94,6 +94,7 @@
               ./modules/analytics.nix
               ./modules/postgresql.nix
               ./modules/pgbackrest-exporter.nix
+              ./modules/librechat.nix
 
               ({ config, ... }: {
                   nix.settings = {
@@ -130,6 +131,7 @@
                   };
                   secrets.taalbubbl = {};
                   secrets.github-token = {};
+                  secrets.requesty-token = { owner = "librechat"};
                   secrets.authelia-jwt-secret = { owner = "authelia-main"; };
                   secrets.authelia-session-secret = { owner = "authelia-main"; };
                   secrets.authelia-storage-key = { owner = "authelia-main"; };
@@ -169,6 +171,7 @@
                   enable_radicale = false;
                   path_radicale = "/var/lib/radicale/";
                 };
+                librechat.enable = true;
               })
 
               # Separate module function — gives access to config

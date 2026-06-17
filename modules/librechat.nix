@@ -7,20 +7,16 @@
 with lib; let
 
   # Default values
-  libreChatDefaults = {
+  librechatDefaults = {
     url = "chat.taalbubbl.org";
-    port = 3456;
+    port = 3080;
   };
-  cfg = config.libreChat // libreChatDefaults;
+  cfg = config.librechat // librechatDefaults;
 
 
 in {
-  options.libreChat = {
-    enable = mkEnableOption "Enable libreChat";
-    service_jwtsecret = mkOption {
-      type = types.str;
-    };
-
+  options.librechat = {
+    enable = mkEnableOption "Enable librechat";
     url = mkOption {
       type = types.str;
     };
@@ -51,78 +47,30 @@ in {
     services.librechat = {
       enable = true;
       env.PORT = cfg.port;
-      frontendScheme = "http";
-      frontendHostname = cfg.url;
-
-      #environmentFiles = [config.age.secrets.libreChat-config.path];
-
-      database = {
-        type = "sqlite";
-        path = cfg.db_path;
-      };
-
+      credentialsFile = config.sops.secrets.requesty-token.path;
       settings = {
-        service = {
-        # If enabled, libreChat will send an email to everyone who is either
-        # assigned to a task or created it when a task reminder is due.
-        enableemailreminders = false;
-        # Whether to let new users registering themselves or not
-        enableregistration = false;
-        # The maximum size clients will be able to request for user avatars.
-        # If clients request a size bigger than this, it will be changed on the fly.
-        maxavatarsize = 4096;
-        # The duration of the issued JWT tokens in seconds.
-        jwtttl = 2592000;
-        # The duration of the "remember me" time in seconds. When the login request is
-        # made with the long param set, the token returned will be valid for this period.
-        jwtttllong = 25920000;
-        maxitemsperpage = 100;
-        # JWTsecret gets incerted by environment file
-        jwtsecret = {
-          file = config.sops.secrets.libreChat-jwt.path;
-        };
-        };
-        #Configure openid
-        auth = {
-          local.enabled = false;
-          openid = {
-            enabled = true;
-           providers = {
-            # The key 'authelia' determines the redirect URI: /auth/openid/authelia
-            authelia = {
-              name = "Authelia";
-              authurl = "https://auth.taalbubbl.org";
-              logouturl = "https://auth.taalbubbl.org/logout";
-              clientid = "libreChat";
-              clientsecret = {
-                file = config.sops.secrets.libreChat-client-secret.path;
+        cache = true;
+        endpoints = {
+          custom = [
+            {
+              apiKey = "\${REQUESTY_API_KEY}";
+              baseURL = "https://router.requesty.ai/v1";
+              modelDisplayLabel = "Requesty";
+              models = {
+                default = [
+                  "nebius/glm-5.2"
+                ];
+                fetch = true;
               };
-            };
-          };
-          };
+              name = "GLM: EU";
+              titleConvo = true;
+              titleModule = "nebius/glm-5.2";
+            }
+          ];
         };
       };
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
 
-    systemd.services.libreChat = {
-  # ... existing code ...
-
-  serviceConfig = {
-    Type = "simple";
-    DynamicUser = true;
-
-    # 1. Add this line:
-    SupplementaryGroups = [ "keys" ];
-
-    # 2. To ensure the secret is actually there when the service starts:
-    # RequiresMountsFor = [ "/run/agenix" ];
-
-    StateDirectory = "libreChat";
-    ExecStart = "${cfg.package}/bin/libreChat";
-    Restart = "always";
-
-  };
-};
   };
 }
