@@ -43,7 +43,9 @@ in {
           };
       };
     };
-
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "mongodb"
+    ];
     services.librechat = {
       enable = true;
       env.PORT = cfg.port;
