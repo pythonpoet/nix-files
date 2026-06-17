@@ -38,6 +38,21 @@ with lib; let
     mkdir -p $out
     unzip ${drawioZip} -d $out
   '';
+
+  # OnlyOffice seeds a brand-new document by converting newFileTemplate/<locale>/
+  # new.<ext> with x2t. The upstream package ships no blank templates and our
+  # ExecStartPre previously created 0-byte placeholders, which x2t rejects
+  # (ExitCode 80 → "an error has occurred while opening the file"). Generate valid
+  # blank documents at build time for the creatable types (see app_registry
+  # allow_creation: docx/xlsx/pptx/pdf) and copy them over the placeholders.
+  onlyofficeNewTemplates = pkgs.runCommand "onlyoffice-new-templates" {
+    nativeBuildInputs = [
+      (pkgs.python3.withPackages (ps: with ps; [ python-docx openpyxl python-pptx reportlab ]))
+    ];
+  } ''
+    mkdir -p "$out"
+    python3 ${../pkgs/onlyoffice-new-templates.py} "$out"
+  '';
 in {
   options.cloud = {
     enable = mkEnableOption "Enable open cloud";
@@ -398,6 +413,14 @@ in {
           mkdir -p "$tmpl"
           for ext in docx docxf xlsx pptx pdf odt ods odp rtf txt csv html epub fb2; do
             : > "$tmpl/new.$ext"
+          done
+          # The 0-byte placeholders above are enough for WOPI discovery (it just
+          # scandirs for extensions), but OnlyOffice cannot SEED a new document
+          # from an empty file — x2t fails with ExitCode 80. Overwrite the
+          # creatable types with valid blank documents built by onlyofficeNewTemplates.
+          for ext in docx xlsx pptx pdf; do
+            cp -f "${onlyofficeNewTemplates}/new.$ext" "$tmpl/new.$ext"
+            chmod u+rw "$tmpl/new.$ext"
           done
           for f in /run/onlyoffice/config/default.json /run/onlyoffice/config/production-linux.json; do
             ${pkgs.jq}/bin/jq \
