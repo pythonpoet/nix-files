@@ -48,7 +48,7 @@ in {
       enable = true;
       env.PORT = cfg.port;
       credentialsFile = config.sops.secrets.requesty-token.path;
-      services.librechat.enableLocalDB = true;
+      librechat.enableLocalDB = true;
       settings = {
         cache = true;
         endpoints = {
