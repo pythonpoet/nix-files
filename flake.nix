@@ -131,7 +131,7 @@
                   };
                   secrets.taalbubbl = {};
                   secrets.github-token = {};
-                  secrets.requesty-token = { owner = "librechat"};
+                  secrets.requesty-token = { owner = "librechat"; };
                   secrets.authelia-jwt-secret = { owner = "authelia-main"; };
                   secrets.authelia-session-secret = { owner = "authelia-main"; };
                   secrets.authelia-storage-key = { owner = "authelia-main"; };
