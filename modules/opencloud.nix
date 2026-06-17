@@ -224,10 +224,13 @@ in {
         # → /etc/opencloud/app-registry.yaml. The NixOS module names each settings
         # file after its attr key, so this MUST be the hyphenated "app-registry", NOT
         # the unified-config section key `app_registry` (which writes app_registry.yaml
-        # that no service reads). Inside a per-service file the fields sit at the top
-        # level (mimetypes:) with no `app_registry:` wrapper — same as proxy.yaml.
+        # that no service reads). Unlike proxy.yaml (flat fields), the
+        # app-registry service's Go config struct nests the list under an `app_registry:`
+        # key (services/app-registry/pkg/config: `AppRegistry yaml:"app_registry"` →
+        # `MimeTypeConfig yaml:"mimetypes"`), so this file DOES need the wrapper. Final
+        # shape: app_registry: { mimetypes: [...] }.
         "app-registry" = mkIf cfg.enable_onlyoffice {
-          mimetypes = [
+          app_registry.mimetypes = [
             {
               mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
               extension = "docx";
