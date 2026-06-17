@@ -219,7 +219,14 @@ in {
         # mimetype metadata, but app-provider *registration* is separate (driven by WOPI
         # discovery), so opening other types still works. Per OpenCloud docs this is
         # YAML-only — env vars cannot set it.
-        app_registry = mkIf cfg.enable_onlyoffice {
+        #
+        # Filename MUST equal the service subcommand name: `opencloud app-registry`
+        # → /etc/opencloud/app-registry.yaml. The NixOS module names each settings
+        # file after its attr key, so this MUST be the hyphenated "app-registry", NOT
+        # the unified-config section key `app_registry` (which writes app_registry.yaml
+        # that no service reads). Inside a per-service file the fields sit at the top
+        # level (mimetypes:) with no `app_registry:` wrapper — same as proxy.yaml.
+        "app-registry" = mkIf cfg.enable_onlyoffice {
           mimetypes = [
             {
               mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
