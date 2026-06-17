@@ -209,6 +209,56 @@ in {
           view_app_addr = "eu.opencloud.api.collaboration";
           secure_view_app_addr = "eu.opencloud.api.collaboration";
         };
+
+        # OpenCloud ships no Microsoft-Office mimetype metadata by default, so
+        # docx/xlsx/pptx get an app provider (opening/editing works) but
+        # allow_creation stays false → nothing appears under the web "New" menu.
+        # Declaring app_registry mimetypes sets the creatable flag + default app.
+        # `default_app` MUST match the registered provider name (COLLABORATION_APP_NAME
+        # = "OnlyOffice", as seen in /app/list). NOTE: this list replaces the built-in
+        # mimetype metadata, but app-provider *registration* is separate (driven by WOPI
+        # discovery), so opening other types still works. Per OpenCloud docs this is
+        # YAML-only — env vars cannot set it.
+        app_registry = mkIf cfg.enable_onlyoffice {
+          mimetypes = [
+            {
+              mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+              extension = "docx";
+              name = "Word Document";
+              description = "Word Document";
+              icon = "";
+              default_app = "OnlyOffice";
+              allow_creation = true;
+            }
+            {
+              mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+              extension = "xlsx";
+              name = "Excel Spreadsheet";
+              description = "Excel Spreadsheet";
+              icon = "";
+              default_app = "OnlyOffice";
+              allow_creation = true;
+            }
+            {
+              mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+              extension = "pptx";
+              name = "PowerPoint Presentation";
+              description = "PowerPoint Presentation";
+              icon = "";
+              default_app = "OnlyOffice";
+              allow_creation = true;
+            }
+            {
+              mime_type = "application/pdf";
+              extension = "pdf";
+              name = "PDF";
+              description = "PDF Document";
+              icon = "";
+              default_app = "OnlyOffice";
+              allow_creation = true;
+            }
+          ];
+        };
       };
     };
 
