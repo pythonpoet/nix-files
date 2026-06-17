@@ -131,7 +131,7 @@ in {
         PROXY_ALLOWED_ORIGINS = "https://cloud.${hostname},https://office.${hostname},https://wopi.${hostname}";
         # Force opencloud frontend handler to forward documents explicitly to the collaboration microservice
   FRONTEND_SECURE_VIEW_APP_ADDR = "eu.opencloud.api.collaboration";
-  
+
   # Tell the server engine exactly which app matches the registration context
   COLLABORATION_APP_NAME = "OnlyOffice";
   COLLABORATION_APP_PRODUCT = "OnlyOffice";
@@ -252,7 +252,7 @@ in {
           ${optionalString cfg.enable_drawio "- \"https://embed.diagrams.net/\""}
           ${optionalString cfg.enable_onlyoffice "- \"https://office.${hostname}\""}
           ${optionalString cfg.enable_onlyoffice "- \"https://wopi.${hostname}\""}
-         
+
         img-src:
           - "'self'"
           - "data:"
@@ -332,6 +332,7 @@ in {
     systemd.services.onlyoffice-docservice.serviceConfig.ExecStartPre =
       mkIf cfg.enable_onlyoffice (lib.mkAfter [
         (pkgs.writeShellScript "onlyoffice-fix-templates" ''
+          echo "running script"
           set -eu
           tmpl=/var/lib/onlyoffice/documentserver/document-templates/new/en-US
           mkdir -p "$tmpl"
