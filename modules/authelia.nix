@@ -124,7 +124,9 @@ in {
           public = false;
           authorization_policy = "one_factor";
           require_pkce = false;
-          token_endpoint_auth_method = "client_secret_basic";
+          # LibreChat's openid-client sends the secret in the POST body, not the
+          # Authorization header — must be client_secret_post, not _basic.
+          token_endpoint_auth_method = "client_secret_post";
           redirect_uris = [ "https://chat.taalbubbl.org/oauth/openid/callback" ];
           scopes = [ "openid" "profile" "email" ];
           response_types = [ "code" ];
