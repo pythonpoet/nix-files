@@ -74,6 +74,13 @@ in {
             }
           ];
         };
+        interface = {
+            privacyPolicy = {
+              externalUrl = "https://librechat.ai/privacy-policy";
+              openNewTab = true;
+            };
+          };
+          version = "0.0.1";
       };
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
