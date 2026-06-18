@@ -46,6 +46,8 @@ in {
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "mongodb"
     ];
+    # use compiled version
+    services.mongodb.package = pkgs.mongodb-ce;
     services.librechat = {
       enable = true;
       env.PORT = cfg.port;
