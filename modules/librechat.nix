@@ -96,7 +96,7 @@ in {
               };
               name = "GLM: EU";
               titleConvo = true;
-              titleModule = "nebius/glm-5.2";
+              titleModel = "nebius/glm-5.2";
             }
           ];
         };
