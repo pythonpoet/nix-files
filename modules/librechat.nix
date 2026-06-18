@@ -51,7 +51,33 @@ in {
     services.mongodb.package = pkgs.mongodb-ce;
     services.librechat = {
       enable = true;
-      env.PORT = cfg.port;
+      env = {
+        PORT = cfg.port;
+
+        # LibreChat needs to know its own public URL for OAuth redirects.
+        DOMAIN_CLIENT = "https://${cfg.url}";
+        DOMAIN_SERVER = "https://${cfg.url}";
+
+        # --- Authelia OIDC ---
+        # Social login must be enabled for the OpenID provider to show up,
+        # and social *registration* lets first-time Authelia users get an
+        # account provisioned automatically.
+        ALLOW_SOCIAL_LOGIN = true;
+        ALLOW_SOCIAL_REGISTRATION = true;
+
+        # OPENID_ISSUER is the Authelia issuer base; LibreChat appends
+        # /.well-known/openid-configuration for discovery.
+        OPENID_ISSUER = "https://${config.authelia.domain}";
+        OPENID_CLIENT_ID = "librechat";
+        OPENID_SCOPE = "openid profile email";
+        # Must match the redirect_uri registered on the Authelia client below.
+        OPENID_CALLBACK_URL = "/oauth/openid/callback";
+        OPENID_BUTTON_LABEL = "Login with Authelia";
+        # Secrets (OPENID_CLIENT_SECRET, OPENID_SESSION_SECRET) live in the
+        # credentialsFile env file alongside the JWT/CREDS keys.
+      };
+      # EnvironmentFile holding REQUESTY_API_KEY plus the required
+      # CREDS_KEY/CREDS_IV/JWT_SECRET/JWT_REFRESH_SECRET and the OIDC secrets.
       credentialsFile = config.sops.secrets.requesty-token.path;
       enableLocalDB = true;
       settings = {

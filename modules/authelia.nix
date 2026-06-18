@@ -115,6 +115,23 @@ in {
           userinfo_signed_response_alg = "none";
         }
         {
+          client_id = "librechat";
+          client_name = "LibreChat";
+          # Hash of OPENID_CLIENT_SECRET (the plaintext lives in the librechat
+          # credentialsFile secret). Generate with:
+          # authelia crypto hash generate pbkdf2 --variant sha512 --no-confirm --password '<OPENID_CLIENT_SECRET>'
+          client_secret = "$pbkdf2-sha512$310000$IBXj2enK24A26yHjcu6bEA$SVWK9O4ctgX7UYQyAHh7Zk25An7rabP4TK9XFo8t7Gx2OZRcQOqkV.dCFUZ/f.0vboWPs82koTEgrUc2IzkYWQ";
+          public = false;
+          authorization_policy = "one_factor";
+          require_pkce = false;
+          token_endpoint_auth_method = "client_secret_basic";
+          redirect_uris = [ "https://chat.taalbubbl.org/oauth/openid/callback" ];
+          scopes = [ "openid" "profile" "email" ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          userinfo_signed_response_alg = "none";
+        }
+        {
           client_id = "web";
           client_name = "OpenCloud";
           public = true;
