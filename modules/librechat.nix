@@ -45,6 +45,7 @@ in {
     };
     nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
       "mongodb"
+      "mongodb-ce"
     ];
     # use compiled version
     services.mongodb.package = pkgs.mongodb-ce;
