@@ -91,8 +91,6 @@ in {
               models = {
                 default = [
                   "nebius/deepseek-ai/deepseek-v4-pro"
-                  "minimaxi/minimax-m3"
-                  "zai/glm-5.2"
                 ];
                 fetch = true;
               };
