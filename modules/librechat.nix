@@ -80,7 +80,7 @@ in {
               openNewTab = true;
             };
           };
-          version = "0.0.1";
+          version = "1.2.1";
       };
     };
     networking.firewall.allowedTCPPorts = [cfg.port];
