@@ -90,13 +90,15 @@ in {
               modelDisplayLabel = "Requesty";
               models = {
                 default = [
-                  "nebius/glm-5.2"
+                  "nebius/deepseek-ai/deepseek-v4-pro"
+                  "minimaxi/minimax-m3"
+                  "zai/glm-5.2"
                 ];
                 fetch = true;
               };
-              name = "GLM: EU";
+              name = "Requesty";
               titleConvo = true;
-              titleModel = "nebius/glm-5.2";
+              titleModel = "Requesty";
             }
           ];
         };
