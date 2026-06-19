@@ -86,7 +86,7 @@ in {
           custom = [
             {
               apiKey = "\${REQUESTY_API_KEY}";
-              baseURL = "https://router.requesty.ai/v1";
+              baseURL = "https://router.eu.requesty.ai/v1";
               modelDisplayLabel = "Requesty";
               models = {
                 default = [
