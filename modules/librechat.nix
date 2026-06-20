@@ -49,6 +49,9 @@ in {
     ];
     # use compiled version
     services.mongodb.package = pkgs.mongodb-ce;
+    ## TEst this
+    # CONFIG_PATH="https://raw.githubusercontent.com/requestyai/librechat-requesty/main/librechat-env.yaml"
+    #REQUESTY_KEY="your_requesty_api_key_here"
     services.librechat = {
       enable = true;
       env = {
