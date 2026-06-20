@@ -520,43 +520,10 @@ in {
       };
     };
 
-    services.radicale = mkIf cfg.enable_radicale {
-      enable = true;
-      settings = {
-        server = {
-          hosts = [ "127.0.0.1:5232" ];
-          ssl = false;
-        };
-        auth = {
-          type = "http_x_remote_user"; # disable authentication, and use the username that OpenCloud provides
-        };
-        web = {
-          type = "none";
-        };
-        storage = {
-          filesystem_folder = "${cfg.path_radicale}/collections";
-        };
-        logging = {
-          level = "debug"; # optional, enable debug logging
-          bad_put_request_content = true; # only if level=debug
-          request_header_on_debug = true; # only if level=debug
-          request_content_on_debug = true; # only if level=debug
-          response_content_on_debug = true; # only if level=debug
-        };
-      };
-    };
-
-    # 1. Create the directory automatically
-    systemd.tmpfiles.rules = mkIf cfg.enable_radicale [
-      "d ${cfg.path_radicale} 0750 radicale radicale -"
-    ];
-
-    # 2. Grant the Radicale service permission to access this path
-    systemd.services.radicale.serviceConfig = mkIf cfg.enable_radicale {
-      ReadWritePaths = [ cfg.path_radicale ];
-      # Ensure the service can create the folder if it's missing
-      ConfigurationDirectory = "radicale";
-    };
+    # Radicale service is now owned by modules/svar-calendar.nix.
+    # The /caldav/ and /carddav/ nginx locations below remain gated by
+    # enable_radicale for the cloud vhost, in case you want CalDAV on
+    # cloud.${hostname} instead of (or in addition to) calendar.${hostname}.
 
     networking.firewall.allowedTCPPorts = [9200 9980 8222 4222 9998 5232];
   };
