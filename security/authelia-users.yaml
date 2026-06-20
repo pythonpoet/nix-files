@@ -46,4 +46,4 @@ users:
     password: "$argon2id$v=19$m=65536,t=3,p=4$gg2KHeDdyfwb9yM78Zjj1w$Lpu/2le+HGzTZ/GnsBQdA8ckeghXyvy2pUAOR7FN8K8"
     email: "t.jansingh@kleurrijker.nl"
     groups:
-      - user
+      - admin
