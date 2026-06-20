@@ -1,5 +1,5 @@
 //#region node_modules/@sveltejs/kit/src/runtime/app/paths/internal/server.js
-var base = "";
+var base = "/calendar";
 var assets = base;
 var app_dir = "_app";
 var initial = {
@@ -35,7 +35,7 @@ function set_public_env(environment) {
 }
 //#endregion
 //#region node_modules/@sveltejs/kit/src/runtime/app/env/internal.js
-var version = "1781997651698";
+var version = "1781999469395";
 var prerendering = false;
 function set_building() {}
 function set_prerendering() {

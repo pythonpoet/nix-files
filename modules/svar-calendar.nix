@@ -58,14 +58,14 @@ in {
 
       locations = {
         "/calendar/" = {
-          root = "${pkgs.svar-calendar}";
+          alias = "${pkgs.svar-calendar}/";
           index = "index.html";
           extraConfig = ''
             auth_request /internal/authelia;
             auth_request_set $remote_user $upstream_http_remote_user;
             error_page 401 =302 https://${autheliaDomain}/?rd=$scheme://$http_host$request_uri;
 
-            try_files $uri $uri/ /index.html;
+            try_files $uri $uri/ /calendar/index.html;
           '';
         };
 

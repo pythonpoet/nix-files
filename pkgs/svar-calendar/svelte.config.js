@@ -11,6 +11,9 @@ const config = {
       precompress: false,
       strict: false,
     }),
+    paths: {
+      base: '/calendar',
+    },
   },
 };
 
