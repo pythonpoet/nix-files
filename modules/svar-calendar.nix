@@ -38,7 +38,7 @@ in {
           filesystem_folder = "${cfg.data_dir}/collections";
         };
         logging = {
-          level = "info";
+          #level = "info";
         };
       };
     };
