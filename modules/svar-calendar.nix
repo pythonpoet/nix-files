@@ -62,7 +62,7 @@ in {
           index = "index.html";
           extraConfig = ''
             auth_request /internal/authelia;
-            auth_request_set $remote_user $upstream_http_remote_user;
+            auth_request_set $caldav_user $upstream_http_remote_user;
             error_page 401 =302 https://${autheliaDomain}/?rd=$scheme://$http_host$request_uri;
 
             try_files $uri $uri/ /calendar/index.html;
@@ -73,10 +73,10 @@ in {
           proxyPass = "http://127.0.0.1:5232/";
           extraConfig = ''
             auth_request /internal/authelia;
-            auth_request_set $remote_user $upstream_http_remote_user;
+            auth_request_set $caldav_user $upstream_http_remote_user;
             error_page 401 =302 https://${autheliaDomain}/?rd=$scheme://$http_host$request_uri;
 
-            proxy_set_header X-Remote-User $remote_user;
+            proxy_set_header X-Remote-User $caldav_user;
             proxy_set_header X-Script-Name /caldav;
           '';
         };
