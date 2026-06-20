@@ -52,12 +52,12 @@ in {
       ConfigurationDirectory = "radicale";
     };
 
-    services.nginx.virtualHosts."calendar.${hostname}" = {
+    services.nginx.virtualHosts."cloud.${hostname}" = {
       forceSSL = true;
       enableACME = true;
 
       locations = {
-        "/" = {
+        "/calendar/" = {
           root = "${pkgs.svar-calendar}";
           index = "index.html";
           extraConfig = ''
