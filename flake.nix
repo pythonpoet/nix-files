@@ -170,7 +170,7 @@
                   data_dir = "/var/lib/opencloud";
                   enable_onlyoffice = true;
                   enable_drawio = true;
-                  enable_radicale = false;
+                  enable_radicale = true;
                   path_radicale = "/var/lib/radicale/";
                 };
                 svar-calendar = {
