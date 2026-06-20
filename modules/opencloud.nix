@@ -163,21 +163,24 @@ in {
           auto_provision_accounts = true;
           # Map the web endpoint routing boundary
           wopi_url = "https://wopi.${hostname}";
-          role_assignment = {
-            driver = "oidc";
-            oidc_role_mapper = {
-              role_claim = "groups";
-              # Defaults get nullified once we declare any field under `oidc_role_mapper`,
-              # so list the mappings explicitly. Claim value `admin` matches what we set in
-              # authelia-users.yaml.
-              role_mapping = [
-                { role_name = "admin";      claim_value = "admin"; }
-                { role_name = "spaceadmin"; claim_value = "opencloudSpaceAdmin"; }
-                { role_name = "user";       claim_value = "opencloudUser"; }
-                { role_name = "user-light"; claim_value = "opencloudGuest"; }
-              ];
+            role_assignment = {
+              driver = "oidc";
+              oidc_role_mapper = {
+                role_claim = "groups";
+                # Defaults get nullified once we declare any field under `oidc_role_mapper`,
+                # so list the mappings explicitly. Claim values MUST exactly match the group
+                # names assigned in authelia-users.yaml — OpenCloud rejects the session with
+                # "no role in claim maps to an OpenCloud role" if none of a user's groups
+                # match a claim_value here (e.g. a user in group `user` won't match a
+                # claim_value of `opencloudUser`). Keep the names simple and in sync.
+                role_mapping = [
+                  { role_name = "admin";      claim_value = "admin"; }
+                  { role_name = "spaceadmin"; claim_value = "spaceadmin"; }
+                  { role_name = "user";       claim_value = "user"; }
+                  { role_name = "user-light"; claim_value = "guest"; }
+                ];
+              };
             };
-          };
 
           user_oidc_claim = "preferred_username";
           user_cs3_claim = "username";
