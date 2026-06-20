@@ -28,6 +28,7 @@
   let
     overlay = final: prev: {
       pgbackrest-exporter = final.callPackage ./pkgs/pgbackrest-exporter.nix { };
+      svar-calendar = final.callPackage ./pkgs/svar-calendar { };
       # OnlyOffice's WOPI discovery scandirs document-templates/new/en-US and
       # crashes when it doesn't exist (returns empty XML → OpenCloud nil-derefs).
       # The upstream nixpkgs package doesn't ship that dir, and has THREE subtleties
@@ -90,6 +91,7 @@
               ./modules/nginx.nix
               ./modules/authelia.nix
               ./modules/opencloud.nix
+              ./modules/svar-calendar.nix
               ./modules/vikunja.nix
               ./modules/analytics.nix
               ./modules/postgresql.nix
@@ -170,6 +172,9 @@
                   enable_drawio = true;
                   enable_radicale = false;
                   path_radicale = "/var/lib/radicale/";
+                };
+                svar-calendar = {
+                  enable = true;
                 };
                 librechat.enable = true;
               })
