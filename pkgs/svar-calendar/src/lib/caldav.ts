@@ -165,10 +165,9 @@ export async function getEvents(
 	return events;
 }
 
-export async function createCalendar(homeSetUrl: string, name: string): Promise<void> {
+export async function createSharedCalendar(name: string): Promise<void> {
 	const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "calendar";
-	const url = homeSetUrl.endsWith("/") ? homeSetUrl + slug + "/" : homeSetUrl + "/" + slug + "/";
-
+	const url = `/shared/${slug}/`;
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
 <c:mkcalendar xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">
   <d:set>
@@ -177,7 +176,6 @@ export async function createCalendar(homeSetUrl: string, name: string): Promise<
     </d:prop>
   </d:set>
 </c:mkcalendar>`;
-
 	const resp = await caldavFetch(url, "MKCALENDAR", body);
 	if (!resp.ok && resp.status !== 409) throw new Error(`MKCALENDAR failed: ${resp.status}`);
 }
