@@ -77,7 +77,6 @@ in {
             error_page 401 =302 https://${autheliaDomain}/?rd=$scheme://$http_host$request_uri;
 
             proxy_set_header X-Remote-User $caldav_user;
-            proxy_set_header X-Script-Name /caldav;
           '';
         };
 
