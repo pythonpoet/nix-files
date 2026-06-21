@@ -63,6 +63,7 @@ export class CalDAVDataProvider extends RestDataProvider {
 			"add-event": {
 				ignoreID: true,
 				handler: async (data: any) => {
+					console.log("[CalDAV] add-event", data);
 					const event = data.event as CalendarEvent;
 					const uid = crypto.randomUUID();
 					const calendar = this.calendars[0];
@@ -82,8 +83,12 @@ export class CalDAVDataProvider extends RestDataProvider {
 						body: icalData,
 					});
 
-					if (!resp.ok) throw new Error(`PUT failed: ${resp.status}`);
+					if (!resp.ok) {
+						console.error("[CalDAV] PUT failed", resp.status, await resp.text());
+						throw new Error(`PUT failed: ${resp.status}`);
+					}
 
+					console.log("[CalDAV] add-event OK", href);
 					const etag = resp.headers.get("etag");
 					if (etag) this.etags.set(href, etag);
 					this.eventCalendarIds.set(href, calendar.url);
@@ -94,6 +99,7 @@ export class CalDAVDataProvider extends RestDataProvider {
 			"update-event": {
 				debounce: 500,
 				handler: async (data: any) => {
+					console.log("[CalDAV] update-event", data);
 					const id = data.id as string;
 					const etag = this.etags.get(id) || "";
 
@@ -112,14 +118,19 @@ export class CalDAVDataProvider extends RestDataProvider {
 						body: icalData,
 					});
 
-					if (!resp.ok) throw new Error(`PUT failed: ${resp.status}`);
+					if (!resp.ok) {
+						console.error("[CalDAV] PUT failed", resp.status, await resp.text());
+						throw new Error(`PUT failed: ${resp.status}`);
+					}
 
+					console.log("[CalDAV] update-event OK", id);
 					const newEtag = resp.headers.get("etag");
 					if (newEtag) this.etags.set(id, newEtag);
 				},
 			},
 			"delete-event": {
 				handler: async (data: any) => {
+					console.log("[CalDAV] delete-event", data);
 					const id = data.id as string;
 					const etag = this.etags.get(id) || "";
 
@@ -128,9 +139,12 @@ export class CalDAVDataProvider extends RestDataProvider {
 
 					const resp = await fetch(id, { method: "DELETE", headers });
 
-					if (!resp.ok && resp.status !== 404)
+					if (!resp.ok && resp.status !== 404) {
+						console.error("[CalDAV] DELETE failed", resp.status, await resp.text());
 						throw new Error(`DELETE failed: ${resp.status}`);
+					}
 
+					console.log("[CalDAV] delete-event OK", id);
 					this.etags.delete(id);
 					this.eventCalendarIds.delete(id);
 				},

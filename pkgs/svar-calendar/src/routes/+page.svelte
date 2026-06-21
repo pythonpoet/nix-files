@@ -45,7 +45,9 @@
 	});
 
 	function init(obj: any) {
+		console.log("[CalDAV] init called, setting next handler", typeof obj, obj);
 		obj.setNext(provider);
+		console.log("[CalDAV] provider wired");
 	}
 
 	function cssByCalendar(obj: any): string {
