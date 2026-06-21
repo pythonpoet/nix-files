@@ -63,7 +63,8 @@ export async function discoverCalendars(): Promise<CalendarInfo[]> {
 	if (!resp1.ok) throw new Error(`PROPFIND root failed: ${resp1.status}`);
 	const doc1 = parseXml(await resp1.text());
 
-	const principalHref = nsText(doc1.documentElement, "href");
+	const principalEl = nsAll(doc1, "current-user-principal")[0];
+	const principalHref = principalEl ? nsText(principalEl, "href") : null;
 	if (!principalHref) throw new Error("No current-user-principal found");
 
 	const propfind2 = `<?xml version="1.0" encoding="UTF-8"?>
@@ -75,7 +76,8 @@ export async function discoverCalendars(): Promise<CalendarInfo[]> {
 	if (!resp2.ok) throw new Error(`PROPFIND principal failed: ${resp2.status}`);
 	const doc2 = parseXml(await resp2.text());
 
-	const homeSetHref = nsText(doc2.documentElement, "href");
+	const homeSetEl = nsAll(doc2, "calendar-home-set")[0];
+	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
 
 	const propfind3 = `<?xml version="1.0" encoding="UTF-8"?>
@@ -174,7 +176,8 @@ export async function ensureDefaultCalendar(): Promise<void> {
 	const resp1 = await caldavFetch("/", "PROPFIND", propfind1, { Depth: "0" });
 	if (!resp1.ok) throw new Error(`PROPFIND root failed: ${resp1.status}`);
 	const doc1 = parseXml(await resp1.text());
-	const principalHref = nsText(doc1.documentElement, "href");
+	const principalEl = nsAll(doc1, "current-user-principal")[0];
+	const principalHref = principalEl ? nsText(principalEl, "href") : null;
 	if (!principalHref) throw new Error("No current-user-principal found");
 
 	const propfind2 = `<?xml version="1.0" encoding="UTF-8"?>
@@ -185,7 +188,8 @@ export async function ensureDefaultCalendar(): Promise<void> {
 	const resp2 = await caldavFetch(principalHref, "PROPFIND", propfind2, { Depth: "0" });
 	if (!resp2.ok) throw new Error(`PROPFIND principal failed: ${resp2.status}`);
 	const doc2 = parseXml(await resp2.text());
-	const homeSetHref = nsText(doc2.documentElement, "href");
+	const homeSetEl = nsAll(doc2, "calendar-home-set")[0];
+	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
 
 	await createCalendar(homeSetHref, "Personal");
