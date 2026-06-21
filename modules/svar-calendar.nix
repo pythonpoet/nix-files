@@ -52,17 +52,17 @@ in {
       [owner]
       user: .+
       collection: ^/{user}/.*$
-      permissions: rw
+      permissions: RrWw
 
       [shared]
       user: .+
       collection: ^/shared/.*$
-      permissions: rw
+      permissions: RrWw
 
       [root]
       user: .+
       collection: .*
-      permissions: rw
+      permissions: RrWw
     '';
 
     systemd.tmpfiles.rules = [
