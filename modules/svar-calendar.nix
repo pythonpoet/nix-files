@@ -67,6 +67,7 @@ in {
 
     systemd.tmpfiles.rules = [
       "d ${cfg.data_dir} 0750 radicale radicale -"
+      "d ${cfg.data_dir}/collections/collection-root/shared 0750 radicale radicale -"
     ];
 
     systemd.services.radicale.serviceConfig = {

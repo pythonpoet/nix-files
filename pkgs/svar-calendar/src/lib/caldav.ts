@@ -64,6 +64,7 @@ async function discoverCalendarsAt(href: string): Promise<CalendarInfo[]> {
 </d:propfind>`;
 
 	const resp = await caldavFetch(href, "PROPFIND", propfind, { Depth: "1" });
+	if (resp.status === 404) return [];
 	if (!resp.ok) throw new Error(`PROPFIND calendars at ${href} failed: ${resp.status}`);
 	const doc = parseXml(await resp.text());
 
