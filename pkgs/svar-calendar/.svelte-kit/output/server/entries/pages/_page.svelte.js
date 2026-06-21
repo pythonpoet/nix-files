@@ -753,14 +753,16 @@ async function discoverCalendars() {
   <d:prop><d:current-user-principal/></d:prop>
 </d:propfind>`, { Depth: "0" });
 	if (!resp1.ok) throw new Error(`PROPFIND root failed: ${resp1.status}`);
-	const principalHref = nsText(parseXml(await resp1.text()).documentElement, "href");
+	const principalEl = nsAll(parseXml(await resp1.text()), "current-user-principal")[0];
+	const principalHref = principalEl ? nsText(principalEl, "href") : null;
 	if (!principalHref) throw new Error("No current-user-principal found");
 	const resp2 = await caldavFetch(principalHref, "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
 <d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">
   <d:prop><c:calendar-home-set/></d:prop>
 </d:propfind>`, { Depth: "0" });
 	if (!resp2.ok) throw new Error(`PROPFIND principal failed: ${resp2.status}`);
-	const homeSetHref = nsText(parseXml(await resp2.text()).documentElement, "href");
+	const homeSetEl = nsAll(parseXml(await resp2.text()), "calendar-home-set")[0];
+	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
 	const resp3 = await caldavFetch(homeSetHref, "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
 <d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav" xmlns:apple="http://apple.com/ns/ical/">
@@ -838,14 +840,16 @@ async function ensureDefaultCalendar() {
   <d:prop><d:current-user-principal/></d:prop>
 </d:propfind>`, { Depth: "0" });
 	if (!resp1.ok) throw new Error(`PROPFIND root failed: ${resp1.status}`);
-	const principalHref = nsText(parseXml(await resp1.text()).documentElement, "href");
+	const principalEl = nsAll(parseXml(await resp1.text()), "current-user-principal")[0];
+	const principalHref = principalEl ? nsText(principalEl, "href") : null;
 	if (!principalHref) throw new Error("No current-user-principal found");
 	const resp2 = await caldavFetch(principalHref, "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
 <d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">
   <d:prop><c:calendar-home-set/></d:prop>
 </d:propfind>`, { Depth: "0" });
 	if (!resp2.ok) throw new Error(`PROPFIND principal failed: ${resp2.status}`);
-	const homeSetHref = nsText(parseXml(await resp2.text()).documentElement, "href");
+	const homeSetEl = nsAll(parseXml(await resp2.text()), "calendar-home-set")[0];
+	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
 	await createCalendar(homeSetHref, "Personal");
 }

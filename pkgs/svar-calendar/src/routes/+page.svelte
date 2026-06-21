@@ -45,7 +45,7 @@
 	});
 
 	function init(obj: any) {
-		api?.setNext(provider);
+		obj.setNext(provider);
 	}
 
 	function cssByCalendar(obj: any): string {
