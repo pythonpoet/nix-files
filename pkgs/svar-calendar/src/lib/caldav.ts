@@ -53,6 +53,41 @@ function formatDateCalDAV(date: Date): string {
 	return `${y}${m}${d}T${h}${mi}${s}Z`;
 }
 
+async function discoverCalendarsAt(href: string): Promise<CalendarInfo[]> {
+	const propfind = `<?xml version="1.0" encoding="UTF-8"?>
+<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav" xmlns:apple="http://apple.com/ns/ical/">
+  <d:prop>
+    <d:resourcetype/>
+    <d:displayname/>
+    <apple:calendar-color/>
+  </d:prop>
+</d:propfind>`;
+
+	const resp = await caldavFetch(href, "PROPFIND", propfind, { Depth: "1" });
+	if (!resp.ok) throw new Error(`PROPFIND calendars at ${href} failed: ${resp.status}`);
+	const doc = parseXml(await resp.text());
+
+	const calendars: CalendarInfo[] = [];
+	for (const response of nsAll(doc, "response")) {
+		const href = nsText(response, "href");
+		if (!href) continue;
+
+		const prop = nsAll(response, "prop")[0];
+		if (!prop) continue;
+
+		const rt = nsAll(prop, "resourcetype")[0];
+		const isCalendar = rt ? nsAll(rt, "calendar").length > 0 : false;
+		if (!isCalendar) continue;
+
+		const displayName = nsText(prop, "displayname") || "Calendar";
+		const color = nsText(prop, "calendar-color") || "#3079ED";
+
+		calendars.push({ url: href, displayName, color });
+	}
+
+	return calendars;
+}
+
 export async function discoverCalendars(): Promise<CalendarInfo[]> {
 	const propfind1 = `<?xml version="1.0" encoding="UTF-8"?>
 <d:propfind xmlns:d="DAV:">
@@ -80,35 +115,15 @@ export async function discoverCalendars(): Promise<CalendarInfo[]> {
 	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
 
-	const propfind3 = `<?xml version="1.0" encoding="UTF-8"?>
-<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav" xmlns:apple="http://apple.com/ns/ical/">
-  <d:prop>
-    <d:resourcetype/>
-    <d:displayname/>
-    <apple:calendar-color/>
-  </d:prop>
-</d:propfind>`;
+	const calendars = await discoverCalendarsAt(homeSetHref);
 
-	const resp3 = await caldavFetch(homeSetHref, "PROPFIND", propfind3, { Depth: "1" });
-	if (!resp3.ok) throw new Error(`PROPFIND calendars failed: ${resp3.status}`);
-	const doc3 = parseXml(await resp3.text());
-
-	const calendars: CalendarInfo[] = [];
-	for (const response of nsAll(doc3, "response")) {
-		const href = nsText(response, "href");
-		if (!href) continue;
-
-		const prop = nsAll(response, "prop")[0];
-		if (!prop) continue;
-
-		const rt = nsAll(prop, "resourcetype")[0];
-		const isCalendar = rt ? nsAll(rt, "calendar").length > 0 : false;
-		if (!isCalendar) continue;
-
-		const displayName = nsText(prop, "displayname") || "Calendar";
-		const color = nsText(prop, "calendar-color") || "#3079ED";
-
-		calendars.push({ url: href, displayName, color });
+	// Also discover shared calendars under /shared/
+	const sharedHref = "/shared/";
+	try {
+		const sharedCals = await discoverCalendarsAt(sharedHref);
+		calendars.push(...sharedCals);
+	} catch {
+		// /shared/ may not exist yet — that's fine
 	}
 
 	return calendars;

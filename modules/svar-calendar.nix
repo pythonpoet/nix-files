@@ -38,9 +38,34 @@ in {
           filesystem_folder = "${cfg.data_dir}/collections";
         };
         logging = {
-          #level = "info";
+          level = "info";
         };
       };
+    };
+
+    # Radicale rights configuration
+    # Each user has rw access to their own collection /{user}/
+    # Authenticated users have rw access to shared collections under /shared/
+    environment.etc."radicale/rights".text = ''
+      [owner]
+      user: .+
+      collection: ^/{user}/.*$
+      permission: rw
+
+      [shared]
+      user: .+
+      collection: ^/shared/.*$
+      permission: rw
+
+      [root-read]
+      user: .+
+      collection: ^/$
+      permission: r
+    '';
+
+    services.radicale.settings.rights = {
+      type = "from_file";
+      file = "/etc/radicale/rights";
     };
 
     systemd.tmpfiles.rules = [
@@ -74,9 +99,11 @@ in {
           extraConfig = ''
             auth_request /internal/authelia;
             auth_request_set $caldav_user $upstream_http_remote_user;
+            auth_request_set $caldav_groups $upstream_http_remote_groups;
             error_page 401 =302 https://${autheliaDomain}/?rd=$scheme://$http_host$request_uri;
 
             proxy_set_header X-Remote-User $caldav_user;
+            proxy_set_header X-Remote-Groups $caldav_groups;
           '';
         };
 

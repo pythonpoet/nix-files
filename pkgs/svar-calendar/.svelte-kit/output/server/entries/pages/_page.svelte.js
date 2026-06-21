@@ -747,6 +747,35 @@ function nsAll(parent, localName) {
 function formatDateCalDAV(date) {
 	return `${date.getUTCFullYear()}${String(date.getUTCMonth() + 1).padStart(2, "0")}${String(date.getUTCDate()).padStart(2, "0")}T${String(date.getUTCHours()).padStart(2, "0")}${String(date.getUTCMinutes()).padStart(2, "0")}${String(date.getUTCSeconds()).padStart(2, "0")}Z`;
 }
+async function discoverCalendarsAt(href) {
+	const resp = await caldavFetch(href, "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
+<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav" xmlns:apple="http://apple.com/ns/ical/">
+  <d:prop>
+    <d:resourcetype/>
+    <d:displayname/>
+    <apple:calendar-color/>
+  </d:prop>
+</d:propfind>`, { Depth: "1" });
+	if (!resp.ok) throw new Error(`PROPFIND calendars at ${href} failed: ${resp.status}`);
+	const doc = parseXml(await resp.text());
+	const calendars = [];
+	for (const response of nsAll(doc, "response")) {
+		const href = nsText(response, "href");
+		if (!href) continue;
+		const prop = nsAll(response, "prop")[0];
+		if (!prop) continue;
+		const rt = nsAll(prop, "resourcetype")[0];
+		if (!(rt ? nsAll(rt, "calendar").length > 0 : false)) continue;
+		const displayName = nsText(prop, "displayname") || "Calendar";
+		const color = nsText(prop, "calendar-color") || "#3079ED";
+		calendars.push({
+			url: href,
+			displayName,
+			color
+		});
+	}
+	return calendars;
+}
 async function discoverCalendars() {
 	const resp1 = await caldavFetch("/", "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
 <d:propfind xmlns:d="DAV:">
@@ -764,32 +793,12 @@ async function discoverCalendars() {
 	const homeSetEl = nsAll(parseXml(await resp2.text()), "calendar-home-set")[0];
 	const homeSetHref = homeSetEl ? nsText(homeSetEl, "href") : null;
 	if (!homeSetHref) throw new Error("No calendar-home-set found");
-	const resp3 = await caldavFetch(homeSetHref, "PROPFIND", `<?xml version="1.0" encoding="UTF-8"?>
-<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav" xmlns:apple="http://apple.com/ns/ical/">
-  <d:prop>
-    <d:resourcetype/>
-    <d:displayname/>
-    <apple:calendar-color/>
-  </d:prop>
-</d:propfind>`, { Depth: "1" });
-	if (!resp3.ok) throw new Error(`PROPFIND calendars failed: ${resp3.status}`);
-	const doc3 = parseXml(await resp3.text());
-	const calendars = [];
-	for (const response of nsAll(doc3, "response")) {
-		const href = nsText(response, "href");
-		if (!href) continue;
-		const prop = nsAll(response, "prop")[0];
-		if (!prop) continue;
-		const rt = nsAll(prop, "resourcetype")[0];
-		if (!(rt ? nsAll(rt, "calendar").length > 0 : false)) continue;
-		const displayName = nsText(prop, "displayname") || "Calendar";
-		const color = nsText(prop, "calendar-color") || "#3079ED";
-		calendars.push({
-			url: href,
-			displayName,
-			color
-		});
-	}
+	const calendars = await discoverCalendarsAt(homeSetHref);
+	const sharedHref = "/shared/";
+	try {
+		const sharedCals = await discoverCalendarsAt(sharedHref);
+		calendars.push(...sharedCals);
+	} catch {}
 	return calendars;
 }
 async function getEvents(calendarUrl, start, end) {
@@ -899,6 +908,7 @@ var CalDAVDataProvider = class extends RestDataProvider {
 			"add-event": {
 				ignoreID: true,
 				handler: async (data) => {
+					console.log("[CalDAV] add-event", data);
 					const event = data.event;
 					const uid = crypto.randomUUID();
 					const calendar = this.calendars[0];
@@ -916,7 +926,11 @@ var CalDAVDataProvider = class extends RestDataProvider {
 						},
 						body: icalData
 					});
-					if (!resp.ok) throw new Error(`PUT failed: ${resp.status}`);
+					if (!resp.ok) {
+						console.error("[CalDAV] PUT failed", resp.status, await resp.text());
+						throw new Error(`PUT failed: ${resp.status}`);
+					}
+					console.log("[CalDAV] add-event OK", href);
 					const etag = resp.headers.get("etag");
 					if (etag) this.etags.set(href, etag);
 					this.eventCalendarIds.set(href, calendar.url);
@@ -926,6 +940,7 @@ var CalDAVDataProvider = class extends RestDataProvider {
 			"update-event": {
 				debounce: 500,
 				handler: async (data) => {
+					console.log("[CalDAV] update-event", data);
 					const id = data.id;
 					const etag = this.etags.get(id) || "";
 					const uid = hrefToUid(id);
@@ -940,12 +955,17 @@ var CalDAVDataProvider = class extends RestDataProvider {
 						headers,
 						body: icalData
 					});
-					if (!resp.ok) throw new Error(`PUT failed: ${resp.status}`);
+					if (!resp.ok) {
+						console.error("[CalDAV] PUT failed", resp.status, await resp.text());
+						throw new Error(`PUT failed: ${resp.status}`);
+					}
+					console.log("[CalDAV] update-event OK", id);
 					const newEtag = resp.headers.get("etag");
 					if (newEtag) this.etags.set(id, newEtag);
 				}
 			},
 			"delete-event": { handler: async (data) => {
+				console.log("[CalDAV] delete-event", data);
 				const id = data.id;
 				const etag = this.etags.get(id) || "";
 				const headers = {};
@@ -954,7 +974,11 @@ var CalDAVDataProvider = class extends RestDataProvider {
 					method: "DELETE",
 					headers
 				});
-				if (!resp.ok && resp.status !== 404) throw new Error(`DELETE failed: ${resp.status}`);
+				if (!resp.ok && resp.status !== 404) {
+					console.error("[CalDAV] DELETE failed", resp.status, await resp.text());
+					throw new Error(`DELETE failed: ${resp.status}`);
+				}
+				console.log("[CalDAV] delete-event OK", id);
 				this.etags.delete(id);
 				this.eventCalendarIds.delete(id);
 			} }
