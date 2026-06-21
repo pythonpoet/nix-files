@@ -40,12 +40,14 @@ in {
         logging = {
           level = "info";
         };
+        rights = {
+          type = "from_file";
+          file = "/etc/radicale/rights";
+        };
       };
     };
 
-    # Radicale rights configuration
-    # Each user has rw access to their own collection /{user}/
-    # Authenticated users have rw access to shared collections under /shared/
+    # Radicale rights: each user rw on /{user}/, all auth'd users rw on /shared/
     environment.etc."radicale/rights".text = ''
       [owner]
       user: .+
@@ -57,16 +59,11 @@ in {
       collection: ^/shared/.*$
       permissions: rw
 
-      [root-read]
+      [root]
       user: .+
-      collection: ^/$
-      permissions: r
+      collection: .*
+      permissions: rw
     '';
-
-    services.radicale.settings.rights = {
-      type = "from_file";
-      file = "/etc/radicale/rights";
-    };
 
     systemd.tmpfiles.rules = [
       "d ${cfg.data_dir} 0750 radicale radicale -"
