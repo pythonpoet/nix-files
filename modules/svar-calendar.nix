@@ -41,7 +41,8 @@ in {
           level = "info";
         };
         rights = {
-          type = "owner_only";
+          type = "from_file";
+          file = "/etc/radicale/rights";
         };
       };
     };
