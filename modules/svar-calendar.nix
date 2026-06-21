@@ -46,21 +46,21 @@ in {
     # Radicale rights configuration
     # Each user has rw access to their own collection /{user}/
     # Authenticated users have rw access to shared collections under /shared/
-    environment.etc."radicale/rights".text = ''
+    environment.etc."radicale/rights.writing".text = ''
       [owner]
       user: .+
       collection: ^/{user}/.*$
-      permission: rw
+      permissions: rw
 
       [shared]
       user: .+
       collection: ^/shared/.*$
-      permission: rw
+      permissions: rw
 
       [root-read]
       user: .+
       collection: ^/$
-      permission: r
+      permissions: r
     '';
 
     services.radicale.settings.rights = {
