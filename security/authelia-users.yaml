@@ -21,7 +21,7 @@ users:
       - admin
   regina:
     displayname: "Regina"
-    password: "$argon2id$v=19$m=65536,t=3,p=4$TtRrdzAGTJj4q3M72Mn/tA$+we6eAbpUQGUEloTmYMFu5RNjBfu/5DEcwQTXSflimc"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$KWgkl98tzF4UvdP8RKL4+g$hF39gXpCESSCt5BDnreh7zo9yoaQUpptOtf4oDZY3n0"
     email: "rjarillo303@gmail.com"
     groups:
       - admin
