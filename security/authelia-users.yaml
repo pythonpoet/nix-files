@@ -33,7 +33,7 @@ users:
       - admin
   tonda:
     displayname: "Tonda"
-    password: "$argon2id$v=19$m=65536,t=3,p=4$GUqRsYZlDVnew9U4e1foKg$9cdIJAxEuIT+v8LjXyzwVaTXlx7w4me0oD+8BwIQcoQ"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$Zy34JLOJRuCzhGveN0nKdw$Mkpgkqso9JcHvM3FSUicSkBZfOTr/M7uwHmghH/zN4g"
     email: "tes.antonin@gmail.com"
     groups:
       - admin
