@@ -53,12 +53,13 @@ in {
         authentication_backend.file.path = toString cfg.usersFile;
 
         session = {
+
           name = "authelia_session";
           expiration = "12h";
           inactivity = "1h";
           remember_me = "1M";
           cookies = [{
-            domain = cfg.sessionDomain;
+            domain = cfg.domain;
             authelia_url = "https://${cfg.domain}";
             expiration = "12h";
             inactivity = "1h";
