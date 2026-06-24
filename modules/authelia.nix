@@ -7,7 +7,6 @@
 with lib; let
   autheliaDefaults = {
     domain = "auth.taalbubbl.org";
-    sessionDomain = "taalbubbl.org";
     port = 9091;
   };
   cfg = config.authelia // autheliaDefaults;
@@ -17,10 +16,6 @@ in {
     domain = mkOption {
       type = types.str;
       default = autheliaDefaults.domain;
-    };
-    sessionDomain = mkOption {
-      type = types.str;
-      default = autheliaDefaults.sessionDomain;
     };
     port = mkOption {
       type = types.port;

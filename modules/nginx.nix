@@ -17,10 +17,10 @@
       recommendedOptimisation = true;
       recommendedProxySettings = lib.mkForce true;
       recommendedTlsSettings = true;
-      
+
       virtualHosts = {
 
-        "taaltaak.org" = {
+        "taalbubbl.org" = {
         #  addSSL = true;
         #  enableACME = true;
           locations."/" = {
@@ -46,7 +46,7 @@
               </body>
               </html>
             '';
-          };         
+          };
         };
       };
   };
