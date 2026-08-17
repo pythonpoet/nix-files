@@ -27,7 +27,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Issue with ms edge tts feature. 
+  # Issue with ms edge tts feature.
   # It wanted to connect to ipv6 but there was a dns issue
   # switching to ipv4 solves the issue
   networking.enableIPv6 = false;
@@ -59,14 +59,14 @@
     description = "david";
     extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
-    openssh.authorizedKeys.keys = 
+    openssh.authorizedKeys.keys =
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/pythonpoet.keys";
         sha256 = "sha256:01mfvwr9ar70mqygly653qdia67i4jg7kqvfannl7pqxf6qp5s9x";
       });
     in
-    builtins.filter (key: key != "") 
+    builtins.filter (key: key != "")
       (lib.strings.splitString "\n" keysContent);
   };
   users.users.tonda = {
@@ -75,14 +75,14 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
-    openssh.authorizedKeys.keys = 
+    openssh.authorizedKeys.keys =
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/styn10.keys";
-        sha256 = "sha256:1xnp103in2m7pxp821mvs39w91142bixdzyczr6plnincgr107hc";
+        sha256 = "sha256:1m34l8i9c5gp3r7x12nqxnl8xp42vvskcw4c2glqvjpg07ch1ns0";
       });
     in
-    builtins.filter (key: key != "") 
+    builtins.filter (key: key != "")
       (lib.strings.splitString "\n" keysContent);
   };
   users.users.markus = {
@@ -91,14 +91,14 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
-    openssh.authorizedKeys.keys = 
+    openssh.authorizedKeys.keys =
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/markus772.keys";
         sha256 = "sha256:1s0q5ir3dvgix2wy8l4qpdfr5fjadc028yrycj11aqmw8mmfxh48";
       });
     in
-    builtins.filter (key: key != "") 
+    builtins.filter (key: key != "")
       (lib.strings.splitString "\n" keysContent);
   };
   users.users.mika = {
@@ -107,14 +107,14 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs; [];
-    openssh.authorizedKeys.keys = 
+    openssh.authorizedKeys.keys =
     let
       keysContent = builtins.readFile (builtins.fetchurl {
         url = "https://github.com/sjiub.keys";
         sha256 = "sha256:17sd3qx59ngly4pdx2w09hkak9xj25wl9xdwdqisbza8frfvzvir";
       });
     in
-    builtins.filter (key: key != "") 
+    builtins.filter (key: key != "")
       (lib.strings.splitString "\n" keysContent);
   };
   # Add users to taaltaak group
@@ -125,8 +125,8 @@
   systemd.tmpfiles.rules = [
     "Z /opt/taalbubbl 0770 taalbubbl taalbubbl -"
   ];
-  
-   
+
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
